@@ -5,6 +5,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabaseClient'
 import AuthGate from '@/components/AuthGate'
+import RichTextEditor from '@/components/RichTextEditor'
 
 const PROGRAM_START = '2026-08-17'
 
@@ -1386,7 +1387,14 @@ function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTa
           <div className="border-t border-black/30 pt-5">
             <h2 className="serif text-4xl">Strategy notebook</h2>
             <p className="mt-2 text-sm leading-6 text-black/55">Theory. Evidence. Critique. Application. Use this space for the week’s synthesis—not raw highlights.</p>
-            <textarea value={state.notes[selectedWeek] || ''} onChange={e => updateNotes(selectedWeek, e.target.value)} placeholder="What do you believe now? What evidence supports it? Where does the framework break? When would you use it?" className="mt-5 min-h-64 w-full resize-y border border-black/25 bg-[#f8f3ea] p-5 leading-6 outline-none focus:border-black" />
+            <div className="mt-5">
+              <RichTextEditor
+                value={state.notes[selectedWeek] || ''}
+                onChange={value => updateNotes(selectedWeek, value)}
+                placeholder="What do you believe now? What evidence supports it? Where does the framework break? When would you use it?"
+                minHeightClass="min-h-64"
+              />
+            </div>
           </div>
         </section>
 
@@ -1684,7 +1692,17 @@ function WeekDetail({ week, state, toggleTask, openTask, selected, onSelect, upd
         </div>
         <div className="border border-black/20 p-5"><h3 className="font-semibold">Case / simulation</h3><p className="mt-2 text-sm leading-6 text-black/65">{week.case}</p><h3 className="mt-6 font-semibold">Frameworks</h3><div className="mt-3 flex flex-wrap gap-2">{week.frameworks.map(f => <span key={f} className="rounded-full bg-black/5 px-3 py-1.5 text-xs">{f}</span>)}</div></div>
       </div>
-      <details className="mt-5 border border-black/20 bg-white/20 p-5"><summary className="cursor-pointer font-semibold">Strategy notebook</summary><textarea value={state.notes[week.number] || ''} onChange={e => updateNotes(week.number, e.target.value)} onClick={e => e.stopPropagation()} placeholder="Theory / Evidence / Critique / Application" className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none" /></details>
+      <details className="mt-5 border border-black/20 bg-white/20 p-5" onClick={e => e.stopPropagation()}>
+        <summary className="cursor-pointer font-semibold">Strategy notebook</summary>
+        <div className="mt-4">
+          <RichTextEditor
+            value={state.notes[week.number] || ''}
+            onChange={value => updateNotes(week.number, value)}
+            placeholder="Theory / Evidence / Critique / Application"
+            minHeightClass="min-h-48"
+          />
+        </div>
+      </details>
     </article>
   )
 }
