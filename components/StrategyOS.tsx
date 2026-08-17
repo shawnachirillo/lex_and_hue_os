@@ -455,11 +455,28 @@ const weeks = rawWeeks.map((week, index) => {
 })
 
 function loadState(): ProgressState {
+  if (typeof window === 'undefined') {
+    return {
+      completed: {},
+      notes: {},
+      startDate: PROGRAM_START,
+    }
+  }
+
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
-    return { completed: stored.completed || {}, notes: stored.notes || {}, startDate: stored.startDate || PROGRAM_START }
+
+    return {
+      completed: stored.completed || {},
+      notes: stored.notes || {},
+      startDate: stored.startDate || PROGRAM_START,
+    }
   } catch {
-    return { completed: {}, notes: {}, startDate: PROGRAM_START }
+    return {
+      completed: {},
+      notes: {},
+      startDate: PROGRAM_START,
+    }
   }
 }
 
