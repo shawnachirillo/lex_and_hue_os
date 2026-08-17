@@ -59,6 +59,7 @@ type DashboardProps = {
   setSelectedWeek: Dispatch<SetStateAction<number>>
   state: ProgressState
   toggleTask: (id: string) => void
+  openTask: (task: Task) => void
   weekDone: number
   overdue: Task[]
   completion: number
@@ -734,6 +735,7 @@ Then give me:
         setSelectedWeek={setSelectedWeek}
         state={state}
         toggleTask={toggleTask}
+        openTask={setSelectedTask}
         weekDone={weekDone}
         overdue={overdue}
         completion={completion}
@@ -763,7 +765,7 @@ Then give me:
   )
 }
 
-function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTask, weekDone, overdue, completion, setView, updateNotes, exportProgress, resetProgress }: DashboardProps) {
+function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTask, openTask, weekDone, overdue, completion, setView, updateNotes, exportProgress, resetProgress }: DashboardProps) {
   const byTrack: Array<[Track, Task[]]> = (['Learn', 'Practice', 'Earn'] as Track[]).map(track => [track, currentWeek.tasks.filter(t => t.track === track)])
   return (
     <main>
@@ -803,7 +805,7 @@ function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTa
         )}
 
         <section className="grid gap-4 lg:grid-cols-3">
-          {byTrack.map(([track, tasks]) => <TrackCard key={track} track={track} tasks={tasks} state={state} toggleTask={toggleTask} openTask={setSelectedTask} />)}
+          {byTrack.map(([track, tasks]) => <TrackCard key={track} track={track} tasks={tasks} state={state} toggleTask={toggleTask} openTask={openTask} />)}
         </section>
 
         <section className="mt-12 grid gap-8 lg:grid-cols-[1fr_.7fr]">
@@ -842,10 +844,10 @@ function TrackCard({ track, tasks, state, toggleTask, openTask }: TrackCardProps
     Practice: 'Real-company analysis, case work and strategic reps.',
     Earn: 'L&H offer, authority, prospecting, pipeline and sales.',
   }
-  const accent = track === 'Earn' ? 'bg-[#ec5a25] text-white' : track === 'Practice' ? 'bg-[#c9bda8]' : 'bg-[#e4dccf]'
+  const accent = track === 'Earn' ? 'bg-[#ec5a25] text-white' : track === 'Practice' ? 'bg-[#cfc5ad]' : 'bg-[#e4dccf]'
   return (
     <div className={`${accent} min-h-[360px] p-6 md:p-7`}>
-      <div className="flex items-start justify-between gap-4"><div><h2 className="serif text-4xl">{track}</h2><p className={`mt-2 text-sm leading-6 ${track === 'Earn' ? 'text-white/70' : 'text-black/55'}`}>{descriptions[track]}</p></div><div className="serif text-2xl">{tasks.filter(t => state.completed[t.id]).length}/{tasks.length}</div></div>
+      <div className="flex items-start justify-between gap-4"><div><h2 className="serif text-4xl">{track}</h2><p className={`mt-2 text-sm leading-6 ${track === 'Earn' ?  'text-white/70' : 'text-black/55'}`}>{descriptions[track]}</p></div><div className="serif text-2xl">{tasks.filter(t => state.completed[t.id]).length}/{tasks.length}</div></div>
       <div className={`mt-6 divide-y ${track === 'Earn' ? 'divide-white/25' : 'divide-black/15'}`}>{tasks.map(task => <TaskRow key={task.id} task={task} checked={!!state.completed[task.id]} onChange={() => toggleTask(task.id)} onOpen={() => openTask(task)} inverse={track === 'Earn'} />)}</div>
     </div>
   )
@@ -885,44 +887,315 @@ function TaskRow({ task, checked, onChange, onOpen, inverse = false, showWeek = 
 }
 
 function WeeksView({ weeks, state, toggleTask, openTask, selectedWeek, setSelectedWeek, search, setSearch, updateNotes }: WeeksViewProps) {
-  const filtered = weeks.filter(w => `${w.title} ${w.question} ${w.frameworks.join(' ')} ${w.readings.join(' ')}`.toLowerCase().includes(search.toLowerCase()))
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const filtered = weeks.filter(w =>
+    `${w.title} ${w.question} ${w.frameworks.join(' ')} ${w.readings.join(' ')}`
+      .toLowerCase()
+      .includes(search.toLowerCase()),
+  )
+
+  const selectedWeekData = weeks[selectedWeek - 1]
+
+  function chooseWeek(weekNumber: number) {
+    setSelectedWeek(weekNumber)
+    setSidebarOpen(false)
+
+    window.setTimeout(() => {
+      document
+        .getElementById(`week-${weekNumber}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+  }
+
   return (
-    <main className="mx-auto max-w-[1600px] px-5 py-10 md:px-10 md:py-14">
-      <div className="grid gap-8 lg:grid-cols-[.45fr_1.55fr]">
-        <aside className="lg:sticky lg:top-28 lg:self-start">
-          <h1 className="serif text-5xl md:text-6xl">The 24 weeks</h1>
-          <p className="mt-4 max-w-md text-sm leading-6 text-black/55">Every week moves through Learn → Practice → Earn. Checking tasks updates the Command Center automatically.</p>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search frameworks, books, subjects…" className="mt-6 w-full border-b border-black/30 bg-transparent py-3 outline-none placeholder:text-black/35" />
-          <div className="mt-7 hidden max-h-[58vh] overflow-auto border-t border-black/15 lg:block">{filtered.map(w => <button key={w.number} onClick={() => { setSelectedWeek(w.number); document.getElementById(`week-${w.number}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }} className={`flex w-full items-center gap-4 border-b border-black/15 py-3 text-left ${selectedWeek === w.number ? 'font-semibold' : 'text-black/60'}`}><span className="serif w-8 text-xl">{w.number}</span><span className="text-sm">{w.title}</span></button>)}</div>
-        </aside>
-        <div className="space-y-10">
-          {filtered.map(w => <WeekDetail key={w.number} week={w} state={state} toggleTask={toggleTask} openTask={openTask} selected={selectedWeek === w.number} onSelect={() => setSelectedWeek(w.number)} updateNotes={updateNotes} />)}
+    <main className="mx-auto max-w-[1600px] px-4 py-6 sm:px-5 sm:py-8 md:px-10 md:py-12">
+      {/* WEEK SELECTOR BAR — ALL SCREEN SIZES */}
+      <div className="mb-8">
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          className="flex min-h-16 w-full items-center justify-between gap-4 border-y border-black/20 py-3 text-left"
+        >
+          <div className="min-w-0">
+            <div className="text-[11px] text-black/45 sm:text-xs">
+              Week {selectedWeek} of 24 · {phaseMeta[selectedWeekData.phase].name}
+            </div>
+            <div className="serif mt-1 truncate text-2xl sm:text-3xl">
+              {selectedWeekData.title}
+            </div>
+          </div>
+
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="hidden text-xs text-black/45 sm:block">
+              Browse 24 weeks
+            </span>
+            <span
+              aria-hidden="true"
+              className="grid h-11 w-11 place-items-center rounded-full border border-black/20 text-2xl leading-none"
+            >
+              ≡
+            </span>
+          </div>
+        </button>
+      </div>
+
+      {/* WEEK SIDEBAR DRAWER — ALL SCREEN SIZES */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-[90]">
+          <button
+            type="button"
+            aria-label="Close week menu"
+            onClick={() => setSidebarOpen(false)}
+            className="absolute inset-0 bg-black/45"
+          />
+
+          <aside className="absolute inset-y-0 left-0 flex w-[88%] max-w-md flex-col bg-[#f3eee4] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-black/20 px-5 py-4 sm:px-6">
+              <div>
+                <div className="serif text-3xl sm:text-4xl">The 24 weeks</div>
+                <div className="mt-1 text-xs text-black/45">
+                  Select a week
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="grid h-11 w-11 place-items-center rounded-full border border-black/20 text-lg"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="px-5 pt-4 sm:px-6">
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search frameworks, books, subjects…"
+                className="w-full border-b border-black/30 bg-transparent py-3 text-base outline-none placeholder:text-black/35"
+              />
+            </div>
+
+            <div className="mt-3 flex-1 overflow-y-auto border-t border-black/10 px-5 pb-8 sm:px-6">
+              {filtered.map(w => (
+                <button
+                  key={w.number}
+                  type="button"
+                  onClick={() => chooseWeek(w.number)}
+                  className={`flex w-full items-center gap-4 border-b border-black/15 py-4 text-left ${
+                    selectedWeek === w.number
+                      ? 'text-black'
+                      : 'text-black/55'
+                  }`}
+                >
+                  <span
+                    className={`serif w-8 shrink-0 text-2xl ${
+                      selectedWeek === w.number
+                        ? 'text-[#ec5a25]'
+                        : ''
+                    }`}
+                  >
+                    {w.number}
+                  </span>
+
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={`block text-sm leading-5 ${
+                        selectedWeek === w.number
+                          ? 'font-semibold'
+                          : ''
+                      }`}
+                    >
+                      {w.title}
+                    </span>
+                    <span className="mt-1 block text-[11px] text-black/35">
+                      {phaseMeta[w.phase].name}
+                    </span>
+                  </span>
+
+                  {selectedWeek === w.number && (
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-[#ec5a25]" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </aside>
         </div>
+      )}
+
+      {/* SELECTED WEEK ONLY — ALL SCREEN SIZES */}
+      <div className="mx-auto max-w-[1500px]">
+        <WeekDetail
+          week={selectedWeekData}
+          state={state}
+          toggleTask={toggleTask}
+          openTask={openTask}
+          selected
+          onSelect={() => setSelectedWeek(selectedWeekData.number)}
+          updateNotes={updateNotes}
+        />
       </div>
     </main>
   )
 }
 
-function WeekDetail({ week, state, toggleTask, openTask, selected, onSelect, updateNotes }: WeekDetailProps) {
+function WeekDetail({
+  week,
+  state,
+  toggleTask,
+  openTask,
+  selected,
+  onSelect,
+  updateNotes,
+}: WeekDetailProps) {
   const done = week.tasks.filter(t => state.completed[t.id]).length
+
   return (
-    <article id={`week-${week.number}`} onClick={onSelect} className={`scroll-mt-28 border-t p-0 pt-5 transition ${selected ? 'border-[#ec5a25]' : 'border-black/30'}`}>
+    <article
+      id={`week-${week.number}`}
+      onClick={onSelect}
+      className={`scroll-mt-28 border-t p-0 pt-5 transition ${
+        selected ? 'border-[#ec5a25]' : 'border-black/30'
+      }`}
+    >
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
-        <div><div className="text-sm text-black/45">Week {week.number} · {formatDate(week.start)}–{formatDate(week.end)} · {phaseMeta[week.phase].name}</div><h2 className="serif mt-2 text-4xl md:text-5xl">{week.title}</h2><p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">{week.question}</p></div>
-        <div className="shrink-0 text-right"><div className="serif text-3xl">{done}/{week.tasks.length}</div><div className="text-xs text-black/40">actions complete</div></div>
+        <div>
+          <div className="text-sm text-black/45">
+            Week {week.number} · {formatDate(week.start)}–
+            {formatDate(week.end)} · {phaseMeta[week.phase].name}
+          </div>
+
+          <h2 className="serif mt-2 text-4xl md:text-5xl">
+            {week.title}
+          </h2>
+
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">
+            {week.question}
+          </p>
+        </div>
+
+        <div className="shrink-0 text-right">
+          <div className="serif text-3xl">
+            {done}/{week.tasks.length}
+          </div>
+          <div className="text-xs text-black/40">
+            actions complete
+          </div>
+        </div>
       </div>
+
       <div className="mt-7 grid gap-5 xl:grid-cols-3">
-        {(['Learn', 'Practice', 'Earn'] as Track[]).map(track => <div key={track} className={`${track === 'Earn' ? 'bg-[#ec5a25] text-white' : 'border border-black/20'} p-5`}><h3 className="serif text-3xl">{track}</h3><div className={`mt-3 divide-y ${track === 'Earn' ? 'divide-white/25' : 'divide-black/10'}`}>{week.tasks.filter(t => t.track === track).map(t => <TaskRow key={t.id} task={t} checked={!!state.completed[t.id]} onChange={() => toggleTask(t.id)} onOpen={() => openTask({ ...t, week: week.number, weekTitle: week.title })} inverse={track === 'Earn'} />)}</div></div>)}
+        {(['Learn', 'Practice', 'Earn'] as Track[]).map(track => (
+          <div
+            key={track}
+            className={`${
+              track === 'Earn'
+                ? 'bg-[#ec5a25] text-white'
+                : track === 'Practice'
+                  ? 'bg-[#cfc5ad] text-[#171512]'
+                  : 'border border-black/20'
+            } p-5`}
+          >
+            <h3 className="serif text-3xl">
+              {track}
+            </h3>
+
+            <div
+              className={`mt-3 divide-y ${
+                track === 'Earn'
+                  ? 'divide-white/25'
+                  : 'divide-black/10'
+              }`}
+            >
+              {week.tasks
+                .filter(t => t.track === track)
+                .map(t => (
+                  <TaskRow
+                    key={t.id}
+                    task={t}
+                    checked={!!state.completed[t.id]}
+                    onChange={() => toggleTask(t.id)}
+                    onOpen={() =>
+                      openTask({
+                        ...t,
+                        week: week.number,
+                        weekTitle: week.title,
+                      })
+                    }
+                    inverse={track === 'Earn'}
+                  />
+                ))}
+            </div>
+          </div>
+        ))}
       </div>
+
       <div className="mt-5 grid gap-5 md:grid-cols-2">
-        <div className="bg-[#ded4c4] p-5"><h3 className="font-semibold">Read / study</h3><ul className="mt-3 space-y-2 text-sm leading-5 text-black/65">{week.readings.map(r => <li key={r}>— {r}</li>)}</ul><h3 className="mt-6 font-semibold">Strategic output</h3><p className="mt-2 serif text-2xl">{week.output}</p></div>
-        <div className="border border-black/20 p-5"><h3 className="font-semibold">Case / simulation</h3><p className="mt-2 text-sm leading-6 text-black/65">{week.case}</p><h3 className="mt-6 font-semibold">Frameworks</h3><div className="mt-3 flex flex-wrap gap-2">{week.frameworks.map(f => <span key={f} className="rounded-full bg-black/5 px-3 py-1.5 text-xs">{f}</span>)}</div></div>
+        <div className="bg-[#ded4c4] p-5">
+          <h3 className="font-semibold">
+            Read / study
+          </h3>
+
+          <ul className="mt-3 space-y-2 text-sm leading-5 text-black/65">
+            {week.readings.map(r => (
+              <li key={r}>— {r}</li>
+            ))}
+          </ul>
+
+          <h3 className="mt-6 font-semibold">
+            Strategic output
+          </h3>
+
+          <p className="mt-2 serif text-2xl">
+            {week.output}
+          </p>
+        </div>
+
+        <div className="border border-black/20 p-5">
+          <h3 className="font-semibold">
+            Case / simulation
+          </h3>
+
+          <p className="mt-2 text-sm leading-6 text-black/65">
+            {week.case}
+          </p>
+
+          <h3 className="mt-6 font-semibold">
+            Frameworks
+          </h3>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {week.frameworks.map(f => (
+              <span
+                key={f}
+                className="rounded-full bg-black/5 px-3 py-1.5 text-xs"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
-      <details className="mt-5 border border-black/20 bg-white/20 p-5"><summary className="cursor-pointer font-semibold">Strategy notebook</summary><textarea value={state.notes[week.number] || ''} onChange={e => updateNotes(week.number, e.target.value)} onClick={e => e.stopPropagation()} placeholder="Theory / Evidence / Critique / Application" className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none" /></details>
+
+      <details className="mt-5 border border-black/20 bg-white/20 p-5">
+        <summary className="cursor-pointer font-semibold">
+          Strategy notebook
+        </summary>
+
+        <textarea
+          value={state.notes[week.number] || ''}
+          onChange={e =>
+            updateNotes(week.number, e.target.value)
+          }
+          onClick={e => e.stopPropagation()}
+          placeholder="Theory / Evidence / Critique / Application"
+          className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none"
+        />
+      </details>
     </article>
   )
 }
-
 type AssignmentWorkspaceProps = {
   task: Task
   week: Week
