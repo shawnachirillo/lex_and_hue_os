@@ -636,17 +636,17 @@ function StrategyApp({ user, onSignOut }: StrategyAppProps) {
   return (
     <div className="min-h-screen bg-[#f3eee4] text-[#171512]">
       <header className="sticky top-0 z-40 border-b border-black/20 bg-[#f3eee4]/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-5 py-4 md:px-10">
+        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-5 sm:py-4 md:px-10">
           <button onClick={() => setView('dashboard')} className="text-left">
-            <div className="serif text-2xl font-semibold leading-none md:text-3xl">Lex & Hue</div>
-            <div className="mt-1 text-xs text-black/55">Strategy OS · 24-week intensive</div>
+            <div className="serif text-xl font-semibold leading-none sm:text-2xl md:text-3xl">Lex & Hue</div>
+            <div className="mt-1 hidden text-xs text-black/55 sm:block">Strategy OS · 24-week intensive</div>
           </button>
           <nav className="scrollbar-none hidden gap-1 overflow-x-auto md:flex">
             {nav.map(([id, label]) => (
               <button key={id} onClick={() => setView(id)} className={`rounded-full px-4 py-2 text-sm transition ${view === id ? 'bg-[#171512] text-[#f8f1e6]' : 'hover:bg-black/5'}`}>{label}</button>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <div className="hidden text-right sm:block">
               <div className="text-sm font-semibold">{completion}% complete</div>
               <div className="text-xs text-black/45">{completedCount} / {allTasks.length} actions</div>
@@ -655,16 +655,22 @@ function StrategyApp({ user, onSignOut }: StrategyAppProps) {
               <div className="text-xs font-semibold">{syncStatus}</div>
               <div className="text-[11px] text-black/45">{user.email}</div>
             </div>
-            <button onClick={enableAlerts} className="rounded-full border border-black/25 px-3 py-2 text-xs hover:bg-white/40">
+            <button onClick={enableAlerts} className="hidden min-h-10 rounded-full border border-black/25 px-3 py-2 text-xs hover:bg-white/40 sm:block">
               {notificationPermission === 'granted' ? 'Alerts on' : 'Enable alerts'}
             </button>
             <button onClick={onSignOut} className="hidden rounded-full border border-black/20 px-3 py-2 text-xs hover:bg-white/40 sm:block">Sign out</button>
           </div>
         </div>
-        <div className="md:hidden scrollbar-none flex gap-1 overflow-x-auto px-4 pb-3">
+        <div className="scrollbar-none flex gap-1 overflow-x-auto border-t border-black/10 px-3 py-2 md:hidden">
           {nav.map(([id, label]) => (
-            <button key={id} onClick={() => setView(id)} className={`whitespace-nowrap rounded-full px-3 py-2 text-xs ${view === id ? 'bg-[#171512] text-[#f8f1e6]' : 'border border-black/15'}`}>{label}</button>
+            <button key={id} onClick={() => setView(id)} className={`min-h-10 shrink-0 whitespace-nowrap rounded-full px-3.5 py-2 text-xs ${view === id ? 'bg-[#171512] text-[#f8f1e6]' : 'border border-black/15'}`}>{label}</button>
           ))}
+          <button onClick={enableAlerts} className="min-h-10 shrink-0 whitespace-nowrap rounded-full border border-black/15 px-3.5 py-2 text-xs sm:hidden">
+            {notificationPermission === 'granted' ? 'Alerts on' : 'Alerts'}
+          </button>
+          <button onClick={onSignOut} className="min-h-10 shrink-0 whitespace-nowrap rounded-full border border-black/15 px-3.5 py-2 text-xs sm:hidden">
+            Sign out
+          </button>
         </div>
       </header>
 
@@ -694,16 +700,16 @@ function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTa
   return (
     <main>
       <section className="border-b border-black/20 bg-[#171512] text-[#f4ede1]">
-        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-14 md:px-10 md:py-20 lg:grid-cols-[1.4fr_.6fr]">
+        <div className="mx-auto grid max-w-[1600px] gap-8 px-4 py-9 sm:px-5 sm:py-12 md:px-10 md:py-20 lg:grid-cols-[1.4fr_.6fr] lg:gap-12">
           <div>
             <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-white/55">
               <span>Week {selectedWeek} of 24</span><span>•</span><span>{formatDate(currentWeek.start)}–{formatDate(currentWeek.end)}</span><span>•</span><span>{phaseMeta[currentWeek.phase].name}</span>
             </div>
-            <h1 className="serif max-w-5xl text-5xl font-medium leading-[.93] md:text-7xl lg:text-8xl">{currentWeek.title}</h1>
-            <p className="mt-7 max-w-3xl text-base leading-7 text-white/70 md:text-lg">{currentWeek.question}</p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <button onClick={() => setView('weeks')} className="rounded-full bg-[#ec5a25] px-5 py-3 text-sm font-semibold text-white">Open this week</button>
-              <select value={selectedWeek} onChange={e => setSelectedWeek(Number(e.target.value))} className="rounded-full border border-white/25 bg-transparent px-4 py-3 text-sm text-white outline-none">
+            <h1 className="serif max-w-5xl text-[2.65rem] font-medium leading-[.94] sm:text-5xl md:text-7xl lg:text-8xl">{currentWeek.title}</h1>
+            <p className="mt-5 max-w-3xl text-[15px] leading-6 text-white/70 sm:mt-7 sm:text-base sm:leading-7 md:text-lg">{currentWeek.question}</p>
+            <div className="mt-7 grid gap-3 sm:mt-9 sm:flex sm:flex-wrap">
+              <button onClick={() => setView('weeks')} className="min-h-12 rounded-full bg-[#ec5a25] px-5 py-3 text-sm font-semibold text-white">Open this week</button>
+              <select value={selectedWeek} onChange={e => setSelectedWeek(Number(e.target.value))} className="min-h-12 w-full rounded-full border border-white/25 bg-transparent px-4 py-3 text-base text-white outline-none sm:w-auto sm:text-sm">
                 {weeks.map(w => <option className="text-black" key={w.number} value={w.number}>Week {w.number} — {w.title}</option>)}
               </select>
             </div>
@@ -720,7 +726,7 @@ function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTa
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1600px] px-5 py-8 md:px-10 md:py-12">
+      <div className="mx-auto max-w-[1600px] px-4 py-7 sm:px-5 sm:py-8 md:px-10 md:py-12">
         {overdue.length > 0 && (
           <div className="mb-8 flex flex-col gap-3 border border-[#ec5a25]/50 bg-[#ec5a25]/10 p-5 md:flex-row md:items-center md:justify-between">
             <div><div className="font-semibold">{overdue.length} unfinished action{overdue.length === 1 ? '' : 's'} need attention.</div><div className="mt-1 text-sm text-black/60">This system does not hide work because the calendar moved on.</div></div>
@@ -728,27 +734,27 @@ function Dashboard({ currentWeek, selectedWeek, setSelectedWeek, state, toggleTa
           </div>
         )}
 
-        <section className="grid gap-4 lg:grid-cols-3">
+        <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {byTrack.map(([track, tasks]) => <TrackCard key={track} track={track} tasks={tasks} state={state} toggleTask={toggleTask} />)}
         </section>
 
-        <section className="mt-12 grid gap-8 lg:grid-cols-[1fr_.7fr]">
+        <section className="mt-10 grid gap-8 sm:mt-12 lg:grid-cols-[1fr_.7fr]">
           <div className="border-t border-black/30 pt-5">
-            <div className="flex items-start justify-between gap-6"><div><h2 className="serif text-4xl">This week’s strategic output</h2><p className="mt-2 text-sm text-black/55">The thing you should have in your hands by Sunday.</p></div><div className="serif text-3xl italic text-[#ec5a25]">W{selectedWeek}</div></div>
+            <div className="flex items-start justify-between gap-6"><div><h2 className="serif text-3xl sm:text-4xl">This week’s strategic output</h2><p className="mt-2 text-sm text-black/55">The thing you should have in your hands by Sunday.</p></div><div className="serif text-3xl italic text-[#ec5a25]">W{selectedWeek}</div></div>
             <div className="mt-6 bg-[#dfd6c7] p-6 md:p-8"><div className="serif text-3xl">{currentWeek.output}</div><div className="mt-5 text-sm leading-6 text-black/65"><strong>Case / simulation:</strong> {currentWeek.case}</div></div>
             <div className="mt-6"><h3 className="font-semibold">Frameworks to own</h3><div className="mt-3 flex flex-wrap gap-2">{currentWeek.frameworks.map(f => <span key={f} className="rounded-full border border-black/20 bg-white/25 px-3 py-2 text-sm">{f}</span>)}</div></div>
           </div>
 
           <div className="border-t border-black/30 pt-5">
-            <h2 className="serif text-4xl">Strategy notebook</h2>
+            <h2 className="serif text-3xl sm:text-4xl">Strategy notebook</h2>
             <p className="mt-2 text-sm leading-6 text-black/55">Theory. Evidence. Critique. Application. Use this space for the week’s synthesis—not raw highlights.</p>
-            <textarea value={state.notes[selectedWeek] || ''} onChange={e => updateNotes(selectedWeek, e.target.value)} placeholder="What do you believe now? What evidence supports it? Where does the framework break? When would you use it?" className="mt-5 min-h-64 w-full resize-y border border-black/25 bg-[#f8f3ea] p-5 leading-6 outline-none focus:border-black" />
+            <textarea value={state.notes[selectedWeek] || ''} onChange={e => updateNotes(selectedWeek, e.target.value)} placeholder="What do you believe now? What evidence supports it? Where does the framework break? When would you use it?" className="mt-5 min-h-56 w-full resize-y border border-black/25 bg-[#f8f3ea] p-4 text-base leading-6 sm:min-h-64 sm:p-5 outline-none focus:border-black" />
           </div>
         </section>
 
         <section className="mt-14 border-y border-black/20 py-8">
           <div className="grid gap-8 md:grid-cols-[.7fr_1.3fr]">
-            <div><h2 className="serif text-4xl">Weekly operating rhythm</h2><p className="mt-3 max-w-md text-sm leading-6 text-black/55">Roughly 10 hours/week. Extra time goes into business development, not more reading.</p></div>
+            <div><h2 className="serif text-3xl sm:text-4xl">Weekly operating rhythm</h2><p className="mt-3 max-w-md text-sm leading-6 text-black/55">Roughly 10 hours/week. Extra time goes into business development, not more reading.</p></div>
             <div className="grid gap-px bg-black/15 sm:grid-cols-2">{weeklyRhythm.map(([day, time, work]) => <div key={day} className="bg-[#f3eee4] p-4"><div className="flex justify-between gap-4"><strong>{day}</strong><span className="text-black/45">{time}</span></div><div className="mt-2 text-sm text-black/65">{work}</div></div>)}</div>
           </div>
         </section>
@@ -770,7 +776,7 @@ function TrackCard({ track, tasks, state, toggleTask }: TrackCardProps) {
   }
   const accent = track === 'Earn' ? 'bg-[#ec5a25] text-white' : track === 'Practice' ? 'bg-[#c9bda8]' : 'bg-[#e4dccf]'
   return (
-    <div className={`${accent} min-h-[360px] p-6 md:p-7`}>
+    <div className={`${accent} min-h-0 p-5 sm:p-6 md:min-h-[360px] md:p-7`}>
       <div className="flex items-start justify-between gap-4"><div><h2 className="serif text-4xl">{track}</h2><p className={`mt-2 text-sm leading-6 ${track === 'Earn' ? 'text-white/70' : 'text-black/55'}`}>{descriptions[track]}</p></div><div className="serif text-2xl">{tasks.filter(t => state.completed[t.id]).length}/{tasks.length}</div></div>
       <div className={`mt-6 divide-y ${track === 'Earn' ? 'divide-white/25' : 'divide-black/15'}`}>{tasks.map(task => <TaskRow key={task.id} task={task} checked={!!state.completed[task.id]} onChange={() => toggleTask(task.id)} inverse={track === 'Earn'} />)}</div>
     </div>
@@ -789,15 +795,15 @@ function TaskRow({ task, checked, onChange, inverse = false, showWeek = false }:
 function WeeksView({ weeks, state, toggleTask, selectedWeek, setSelectedWeek, search, setSearch, updateNotes }: WeeksViewProps) {
   const filtered = weeks.filter(w => `${w.title} ${w.question} ${w.frameworks.join(' ')} ${w.readings.join(' ')}`.toLowerCase().includes(search.toLowerCase()))
   return (
-    <main className="mx-auto max-w-[1600px] px-5 py-10 md:px-10 md:py-14">
+    <main className="mx-auto max-w-[1600px] px-4 py-8 sm:px-5 sm:py-10 md:px-10 md:py-14">
       <div className="grid gap-8 lg:grid-cols-[.45fr_1.55fr]">
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <h1 className="serif text-5xl md:text-6xl">The 24 weeks</h1>
+          <h1 className="serif text-4xl sm:text-5xl md:text-6xl">The 24 weeks</h1>
           <p className="mt-4 max-w-md text-sm leading-6 text-black/55">Every week moves through Learn → Practice → Earn. Checking tasks updates the Command Center automatically.</p>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search frameworks, books, subjects…" className="mt-6 w-full border-b border-black/30 bg-transparent py-3 outline-none placeholder:text-black/35" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search frameworks, books, subjects…" className="mt-6 w-full border-b border-black/30 bg-transparent py-3 text-base outline-none placeholder:text-black/35" />
           <div className="mt-7 hidden max-h-[58vh] overflow-auto border-t border-black/15 lg:block">{filtered.map(w => <button key={w.number} onClick={() => { setSelectedWeek(w.number); document.getElementById(`week-${w.number}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }} className={`flex w-full items-center gap-4 border-b border-black/15 py-3 text-left ${selectedWeek === w.number ? 'font-semibold' : 'text-black/60'}`}><span className="serif w-8 text-xl">{w.number}</span><span className="text-sm">{w.title}</span></button>)}</div>
         </aside>
-        <div className="space-y-10">
+        <div className="space-y-8 sm:space-y-10">
           {filtered.map(w => <WeekDetail key={w.number} week={w} state={state} toggleTask={toggleTask} selected={selectedWeek === w.number} onSelect={() => setSelectedWeek(w.number)} updateNotes={updateNotes} />)}
         </div>
       </div>
@@ -810,8 +816,8 @@ function WeekDetail({ week, state, toggleTask, selected, onSelect, updateNotes }
   return (
     <article id={`week-${week.number}`} onClick={onSelect} className={`scroll-mt-28 border-t p-0 pt-5 transition ${selected ? 'border-[#ec5a25]' : 'border-black/30'}`}>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
-        <div><div className="text-sm text-black/45">Week {week.number} · {formatDate(week.start)}–{formatDate(week.end)} · {phaseMeta[week.phase].name}</div><h2 className="serif mt-2 text-4xl md:text-5xl">{week.title}</h2><p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">{week.question}</p></div>
-        <div className="shrink-0 text-right"><div className="serif text-3xl">{done}/{week.tasks.length}</div><div className="text-xs text-black/40">actions complete</div></div>
+        <div><div className="text-sm text-black/45">Week {week.number} · {formatDate(week.start)}–{formatDate(week.end)} · {phaseMeta[week.phase].name}</div><h2 className="serif mt-2 text-3xl sm:text-4xl md:text-5xl">{week.title}</h2><p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">{week.question}</p></div>
+        <div className="shrink-0 text-left md:text-right"><div className="serif text-3xl">{done}/{week.tasks.length}</div><div className="text-xs text-black/40">actions complete</div></div>
       </div>
       <div className="mt-7 grid gap-5 xl:grid-cols-3">
         {(['Learn', 'Practice', 'Earn'] as Track[]).map(track => <div key={track} className={`${track === 'Earn' ? 'bg-[#ec5a25] text-white' : 'border border-black/20'} p-5`}><h3 className="serif text-3xl">{track}</h3><div className={`mt-3 divide-y ${track === 'Earn' ? 'divide-white/25' : 'divide-black/10'}`}>{week.tasks.filter(t => t.track === track).map(t => <TaskRow key={t.id} task={t} checked={!!state.completed[t.id]} onChange={() => toggleTask(t.id)} inverse={track === 'Earn'} />)}</div></div>)}
@@ -820,7 +826,7 @@ function WeekDetail({ week, state, toggleTask, selected, onSelect, updateNotes }
         <div className="bg-[#ded4c4] p-5"><h3 className="font-semibold">Read / study</h3><ul className="mt-3 space-y-2 text-sm leading-5 text-black/65">{week.readings.map(r => <li key={r}>— {r}</li>)}</ul><h3 className="mt-6 font-semibold">Strategic output</h3><p className="mt-2 serif text-2xl">{week.output}</p></div>
         <div className="border border-black/20 p-5"><h3 className="font-semibold">Case / simulation</h3><p className="mt-2 text-sm leading-6 text-black/65">{week.case}</p><h3 className="mt-6 font-semibold">Frameworks</h3><div className="mt-3 flex flex-wrap gap-2">{week.frameworks.map(f => <span key={f} className="rounded-full bg-black/5 px-3 py-1.5 text-xs">{f}</span>)}</div></div>
       </div>
-      <details className="mt-5 border border-black/20 bg-white/20 p-5"><summary className="cursor-pointer font-semibold">Strategy notebook</summary><textarea value={state.notes[week.number] || ''} onChange={e => updateNotes(week.number, e.target.value)} onClick={e => e.stopPropagation()} placeholder="Theory / Evidence / Critique / Application" className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none" /></details>
+      <details className="mt-5 border border-black/20 bg-white/20 p-5"><summary className="cursor-pointer font-semibold">Strategy notebook</summary><textarea value={state.notes[week.number] || ''} onChange={e => updateNotes(week.number, e.target.value)} onClick={e => e.stopPropagation()} placeholder="Theory / Evidence / Critique / Application" className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 text-base outline-none" /></details>
     </article>
   )
 }
@@ -832,17 +838,17 @@ function SprintView() {
   return (
     <main>
       <section className="bg-[#ec5a25] text-white">
-        <div className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-20"><div className="max-w-5xl"><div className="text-sm text-white/65">Parallel commercial track · Day {day}</div><h1 className="serif mt-3 text-6xl leading-[.95] md:text-8xl">90-Day L&H Revenue Sprint</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-white/75">The academic program never gets to become a hiding place. Revenue activity starts in Week 1, and the Brand Evolution Audit is the paid entry point.</p></div></div>
+        <div className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-20"><div className="max-w-5xl"><div className="text-sm text-white/65">Parallel commercial track · Day {day}</div><h1 className="serif mt-3 text-[2.75rem] leading-[.95] sm:text-6xl md:text-8xl">90-Day L&H Revenue Sprint</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-white/75">The academic program never gets to become a hiding place. Revenue activity starts in Week 1, and the Brand Evolution Audit is the paid entry point.</p></div></div>
       </section>
-      <div className="mx-auto max-w-[1600px] px-5 py-10 md:px-10 md:py-14">
+      <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-5 sm:py-10 md:px-10 md:py-14">
         <div className="grid gap-px bg-black/20 lg:grid-cols-4">{sprintStages.map((stage, i) => <div key={stage.days} className="bg-[#f3eee4] p-6"><div className="serif text-2xl italic text-[#ec5a25]">0{i + 1}</div><div className="mt-8 text-sm text-black/45">{stage.days}</div><h2 className="serif mt-1 text-3xl">{stage.title}</h2><p className="mt-4 text-sm leading-6 text-black/60">{stage.target}</p><div className="mt-6 border-t border-black/15 pt-4">{stage.actions.map(a => <div key={a} className="border-b border-black/10 py-3 text-sm leading-5">{a}</div>)}</div></div>)}</div>
 
         <section className="mt-14 grid gap-8 lg:grid-cols-[.75fr_1.25fr]">
-          <div><h2 className="serif text-5xl">The entry offer</h2><p className="mt-4 text-sm leading-6 text-black/55">Not an inexpensive version of branding. Paid diagnosis that can lead into implementation.</p></div>
+          <div><h2 className="serif text-4xl sm:text-5xl">The entry offer</h2><p className="mt-4 text-sm leading-6 text-black/55">Not an inexpensive version of branding. Paid diagnosis that can lead into implementation.</p></div>
           <div className="bg-[#171512] p-7 text-[#f4ede1] md:p-10"><div className="flex flex-col justify-between gap-5 md:flex-row"><div><h3 className="serif text-4xl">Brand Evolution Audit</h3><p className="mt-2 text-white/55">Introductory target price</p></div><div className="serif text-5xl italic text-[#ec5a25]">$950</div></div><div className="mt-8 grid gap-x-8 gap-y-3 border-t border-white/20 pt-6 sm:grid-cols-2">{['Business evolution','Customer / audience','Market position','Competitors','Messaging','Visual identity','Distinctive assets','Website / digital presence','Customer touchpoints','Brand consistency','Growth opportunities','Priority recommendations'].map(x => <div key={x} className="text-sm text-white/75">{x}</div>)}</div><div className="mt-8 border-t border-white/20 pt-6"><div className="serif text-3xl">Brand Evolution Roadmap</div><div className="mt-4 grid gap-3 sm:grid-cols-4">{[['KEEP','Equity worth protecting'],['CHANGE','What weakens the brand'],['CREATE','What the next stage requires'],['PRIORITIZE','Now, next, later']].map(([a,b]) => <div key={a} className="border border-white/20 p-4"><strong className="text-[#ec5a25]">{a}</strong><div className="mt-2 text-xs leading-5 text-white/55">{b}</div></div>)}</div></div></div>
         </section>
 
-        <section className="mt-14 border-t border-black/30 pt-6"><h2 className="serif text-5xl">Initial operating funnel</h2><div className="mt-7 grid gap-px bg-black/20 sm:grid-cols-5">{[['50','qualified prospects'],['15','conversations'],['5','discovery calls'],['2','paid audits'],['1','larger engagement']].map(([n,l]) => <div key={l} className="bg-[#dfd6c7] p-6 text-center"><div className="serif text-5xl">{n}</div><div className="mt-2 text-xs text-black/55">{l}</div></div>)}</div><p className="mt-4 text-xs text-black/45">These are operating targets, not promises or universal conversion benchmarks.</p></section>
+        <section className="mt-14 border-t border-black/30 pt-6"><h2 className="serif text-4xl sm:text-5xl">Initial operating funnel</h2><div className="mt-7 grid gap-px bg-black/20 sm:grid-cols-5">{[['50','qualified prospects'],['15','conversations'],['5','discovery calls'],['2','paid audits'],['1','larger engagement']].map(([n,l]) => <div key={l} className="bg-[#dfd6c7] p-6 text-center"><div className="serif text-5xl">{n}</div><div className="mt-2 text-xs text-black/55">{l}</div></div>)}</div><p className="mt-4 text-xs text-black/45">These are operating targets, not promises or universal conversion benchmarks.</p></section>
       </div>
     </main>
   )
@@ -850,10 +856,10 @@ function SprintView() {
 
 function PlanView({ text }: PlanViewProps) {
   return (
-    <main className="mx-auto max-w-[1500px] px-5 py-10 md:px-10 md:py-14">
+    <main className="mx-auto max-w-[1500px] px-4 py-8 sm:px-5 sm:py-10 md:px-10 md:py-14">
       <div className="grid gap-8 lg:grid-cols-[.45fr_1.55fr]">
-        <aside className="lg:sticky lg:top-28 lg:self-start"><h1 className="serif text-5xl md:text-6xl">Master plan</h1><p className="mt-4 max-w-sm text-sm leading-6 text-black/55">The complete source plan is preserved here verbatim so nothing from the original curriculum disappears when it is converted into tasks.</p><div className="mt-8 border-t border-black/20 pt-5"><h2 className="font-semibold">Case-study lens</h2><div className="mt-3 space-y-2">{caseTemplate.map((x,i) => <div key={x} className="text-xs leading-5 text-black/55"><span className="mr-2 serif text-lg text-black">{i+1}</span>{x}</div>)}</div></div></aside>
-        <pre className="overflow-x-auto whitespace-pre-wrap border border-black/20 bg-[#f8f3ea] p-5 font-mono text-[12px] leading-6 text-black/70 md:p-8">{text}</pre>
+        <aside className="lg:sticky lg:top-28 lg:self-start"><h1 className="serif text-4xl sm:text-5xl md:text-6xl">Master plan</h1><p className="mt-4 max-w-sm text-sm leading-6 text-black/55">The complete source plan is preserved here verbatim so nothing from the original curriculum disappears when it is converted into tasks.</p><div className="mt-8 border-t border-black/20 pt-5"><h2 className="font-semibold">Case-study lens</h2><div className="mt-3 space-y-2">{caseTemplate.map((x,i) => <div key={x} className="text-xs leading-5 text-black/55"><span className="mr-2 serif text-lg text-black">{i+1}</span>{x}</div>)}</div></div></aside>
+        <pre className="max-w-full overflow-x-auto whitespace-pre-wrap break-words border border-black/20 bg-[#f8f3ea] p-4 font-mono text-[11px] leading-5 sm:p-5 sm:text-[12px] sm:leading-6 text-black/70 md:p-8">{text}</pre>
       </div>
     </main>
   )

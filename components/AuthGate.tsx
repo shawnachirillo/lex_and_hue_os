@@ -65,8 +65,10 @@ export default function AuthGate({ children }: AuthGateProps) {
 
   if (loadingSession) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#f3eee4] text-[#171512]">
-        <div className="serif text-3xl">Opening Strategy OS…</div>
+      <div className="grid min-h-svh place-items-center bg-[#f3eee4] px-6 text-[#171512]">
+        <div className="serif text-center text-2xl sm:text-3xl">
+          Opening Strategy OS…
+        </div>
       </div>
     )
   }
@@ -79,62 +81,64 @@ export default function AuthGate({ children }: AuthGateProps) {
   }
 
   return (
-    <main className="grid min-h-screen bg-[#f3eee4] text-[#171512] lg:grid-cols-[1.15fr_.85fr]">
-      <section className="flex min-h-[46vh] flex-col justify-between bg-[#171512] p-8 text-[#f8f1e6] md:p-14 lg:min-h-screen">
+    <main className="grid min-h-svh bg-[#f3eee4] text-[#171512] lg:grid-cols-[1.15fr_.85fr]">
+      <section className="flex min-h-[38svh] flex-col justify-between bg-[#171512] px-6 py-6 text-[#f8f1e6] sm:min-h-[44svh] sm:p-8 md:p-14 lg:min-h-screen">
         <div>
-          <div className="serif text-3xl font-semibold">Lex & Hue</div>
-          <div className="mt-1 text-sm text-white/50">
+          <div className="serif text-2xl font-semibold sm:text-3xl">
+            Lex & Hue
+          </div>
+
+          <div className="mt-1 text-xs text-white/50 sm:text-sm">
             Strategy OS · 24-week intensive
           </div>
         </div>
 
-        <div className="max-w-2xl py-16">
-          <h1 className="serif text-6xl leading-[.92] md:text-8xl">
+        <div className="max-w-2xl py-10 sm:py-14 lg:py-16">
+          <h1 className="serif text-[3.25rem] leading-[.9] sm:text-6xl md:text-8xl">
             Learn. Practice.{' '}
             <em className="text-[#ec5a25]">Earn.</em>
           </h1>
 
-          <p className="mt-8 max-w-lg text-base leading-7 text-white/60">
+          <p className="mt-6 max-w-lg text-sm leading-6 text-white/60 sm:mt-8 sm:text-base sm:leading-7">
             Your graduate-level brand strategy curriculum and Lex & Hue revenue
             accelerator, synced across every device you use.
           </p>
         </div>
 
-        <p className="text-xs text-white/35">
+        <p className="text-[11px] text-white/35 sm:text-xs">
           Your progress is private to your account.
         </p>
       </section>
 
-      <section className="flex items-center justify-center p-6 md:p-12">
+      <section className="flex items-start justify-center px-6 py-10 sm:items-center sm:p-10 md:p-12">
         <form
           onSubmit={submit}
-          className="w-full max-w-md border-t border-black/30 pt-7"
+          className="w-full max-w-md border-t border-black/30 pt-6 sm:pt-7"
         >
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2 className="serif text-5xl">
-                {mode === 'signin'
-                  ? 'Welcome back.'
-                  : 'Create your account.'}
-              </h2>
+          <div>
+            <h2 className="serif text-4xl leading-none sm:text-5xl">
+              {mode === 'signin'
+                ? 'Welcome back.'
+                : 'Create your account.'}
+            </h2>
 
-              <p className="mt-3 text-sm leading-6 text-black/55">
-                Use the same login on every device and your completed work and
-                Strategy Notebook will follow you.
-              </p>
-            </div>
+            <p className="mt-3 text-sm leading-6 text-black/55">
+              Use the same login on every device and your completed work and
+              Strategy Notebook will follow you.
+            </p>
           </div>
 
-          <label className="mt-8 block text-sm font-semibold">
+          <label className="mt-7 block text-sm font-semibold sm:mt-8">
             Email
           </label>
 
           <input
             required
             type="email"
+            autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="mt-2 w-full border border-black/25 bg-transparent px-4 py-3 outline-none focus:border-black"
+            className="mt-2 min-h-12 w-full border border-black/25 bg-transparent px-4 py-3 text-base outline-none focus:border-black"
           />
 
           <label className="mt-5 block text-sm font-semibold">
@@ -145,9 +149,10 @@ export default function AuthGate({ children }: AuthGateProps) {
             required
             minLength={6}
             type="password"
+            autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="mt-2 w-full border border-black/25 bg-transparent px-4 py-3 outline-none focus:border-black"
+            className="mt-2 min-h-12 w-full border border-black/25 bg-transparent px-4 py-3 text-base outline-none focus:border-black"
           />
 
           {message && (
@@ -158,7 +163,7 @@ export default function AuthGate({ children }: AuthGateProps) {
 
           <button
             disabled={working}
-            className="mt-7 w-full bg-[#ec5a25] px-5 py-3.5 font-semibold text-white disabled:opacity-50"
+            className="mt-7 min-h-12 w-full bg-[#ec5a25] px-5 py-3.5 font-semibold text-white disabled:opacity-50"
           >
             {working
               ? 'Working…'
@@ -173,7 +178,7 @@ export default function AuthGate({ children }: AuthGateProps) {
               setMode(mode === 'signin' ? 'signup' : 'signin')
               setMessage('')
             }}
-            className="mt-4 w-full py-2 text-sm underline underline-offset-4"
+            className="mt-3 min-h-12 w-full px-2 py-3 text-sm underline underline-offset-4 sm:mt-4"
           >
             {mode === 'signin'
               ? 'First time? Create an account'
