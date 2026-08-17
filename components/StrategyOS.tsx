@@ -11,12 +11,20 @@ const PROGRAM_START = '2026-08-17'
 type Track = 'Learn' | 'Practice' | 'Earn'
 type View = 'dashboard' | 'weeks' | 'sprint' | 'plan'
 
+type ReadingAssignment = {
+  source: string
+  assignment: string
+  studyFor: string
+}
+
 type RawWeek = {
   title: string
   phase: number
   question: string
   frameworks: string[]
   readings: string[]
+  requiredReadings: ReadingAssignment[]
+  mastery: string[]
   case: string
   output: string
   learn: string[]
@@ -143,6 +151,34 @@ const rawWeeks: RawWeek[] = [
     question: 'What is strategy, and how is it different from goals, tactics, branding and operational improvement?',
     frameworks: ['Rumelt Strategy Kernel', 'Porter trade-offs + activity-system fit', 'Playing to Win', 'Marketing Myopia'],
     readings: ['Richard Rumelt — Good Strategy/Bad Strategy', 'Michael Porter — What Is Strategy?', 'Roger Martin + A.G. Lafley — Playing to Win', 'Theodore Levitt — Marketing Myopia'],
+    requiredReadings: [
+      {
+        source: "Richard Rumelt \u2014 Good Strategy/Bad Strategy",
+        assignment: "Read the Introduction and Chapters 1\u20135: Good Strategy Is Unexpected, Discovering Power, Bad Strategy, Why So Much Bad Strategy?, and The Kernel of Good Strategy.",
+        studyFor: "Distinguish strategy from goals, slogans, ambition, and operational improvement. Be able to explain Diagnosis \u2192 Guiding Policy \u2192 Coherent Actions.",
+      },
+      {
+        source: "Michael Porter \u2014 What Is Strategy?",
+        assignment: "Read the full Harvard Business Review article.",
+        studyFor: "Operational effectiveness vs. strategy; unique and valuable positioning; trade-offs; activity-system fit; why strategic choice requires saying no.",
+      },
+      {
+        source: "Roger Martin + A.G. Lafley \u2014 Playing to Win",
+        assignment: "Read the opening strategy-choice chapters introducing the five-part Strategy Choice Cascade.",
+        studyFor: "Winning aspiration \u2192 Where to Play \u2192 How to Win \u2192 Capabilities \u2192 Management Systems. Compare this choice system with Rumelt's kernel.",
+      },
+      {
+        source: "Theodore Levitt \u2014 Marketing Myopia",
+        assignment: "Read the full article.",
+        studyFor: "How defining a business by its product rather than the customer's underlying need can create strategic blindness.",
+      }
+    ],
+    mastery: [
+      "Explain why a goal is not a strategy.",
+      "Write a clear diagnosis, guiding policy, and coherent actions.",
+      "Identify real strategic trade-offs and where-to-play/how-to-win choices.",
+      "Define Lex & Hue by the customer problem it solves, not merely by its services."
+    ],
     case: 'Mabel & Stone — diagnose the business before prescribing a luxury website.',
     output: 'L&H strategic diagnosis',
     learn: ['Define strategy vs aspiration, tactic, operating principle and execution.', 'Study Diagnosis → Guiding Policy → Coherent Actions.', 'Study where to play / how to win / capabilities / systems.', 'Create Strategy Notebook entries: Theory, Evidence, Critique, Application.'],
@@ -154,6 +190,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do you discover what is true instead of relying on what a client assumes?',
     frameworks: ['Jobs to Be Done', 'Forces of Progress', 'Laddering / Means-End Chains', 'Semi-structured interviews', 'Review mining'],
     readings: ['Clayton Christensen / Bob Moesta — Jobs to Be Done', 'Reynolds & Gutman — Means-End Chains + laddering', 'Research customer journeys, social listening and survey design'],
+    requiredReadings: [
+      {
+        source: "Clayton Christensen \u2014 Competing Against Luck",
+        assignment: "Read the Introduction and the early chapters that introduce Jobs to Be Done and the circumstances that cause customers to 'hire' a solution.",
+        studyFor: "Separate demographics from progress customers are trying to make. Identify functional, social, and emotional dimensions of a job.",
+      },
+      {
+        source: "Bob Moesta \u2014 Demand-Side Sales 101",
+        assignment: "Read the chapters introducing the Forces of Progress and customer 'switch' interviews.",
+        studyFor: "Push of the situation, pull of a new solution, anxiety of change, and habit of the present. Learn how to interview for causality rather than opinions.",
+      },
+      {
+        source: "Thomas Reynolds & Jonathan Gutman \u2014 Laddering Theory, Method, Analysis, and Interpretation",
+        assignment: "Study the core sections explaining attributes \u2192 consequences \u2192 values and the laddering interview technique.",
+        studyFor: "Learn how to move from surface preferences to deeper meanings and decision criteria.",
+      }
+    ],
+    mastery: [
+      "Design a semi-structured interview that uncovers behavior rather than opinions.",
+      "Use Forces of Progress to explain why a customer changes.",
+      "Ladder from surface attributes to deeper consequences and values.",
+      "Synthesize qualitative evidence into usable strategic insight."
+    ],
     case: 'Interview established business owners about the moment their brand stopped representing the business.',
     output: '5 business-owner interviews',
     learn: ['Learn qualitative vs quantitative research.', 'Study the difference between what people say and what people do.', 'Build an interview guide around change, tension, attempted solutions and perceived value.'],
@@ -165,6 +224,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Where should a business compete, for whom, and against what alternatives?',
     frameworks: ['Ries & Trout', 'Keller POP/POD + frame of reference', 'April Dunford positioning sequence', 'Creative-firm specialization'],
     readings: ['April Dunford — Obviously Awesome', 'Ries & Trout — Positioning: The Battle for Your Mind', 'Keller / Sternthal / Tybout — positioning, parity and difference', 'Blair Enns + David C. Baker on creative-firm positioning'],
+    requiredReadings: [
+      {
+        source: "April Dunford \u2014 Obviously Awesome",
+        assignment: "Read the chapters that walk through competitive alternatives, unique attributes, value, best-fit customers, market category, and relevant trends.",
+        studyFor: "Build positioning from the customer's actual alternatives rather than from internal brand adjectives.",
+      },
+      {
+        source: "Al Ries & Jack Trout \u2014 Positioning",
+        assignment: "Read the opening chapters introducing the battle for the mind and the importance of category and frame of reference.",
+        studyFor: "Understand positioning as a relative choice in the customer's mind, not simply a tagline.",
+      },
+      {
+        source: "Kevin Lane Keller \u2014 Strategic Brand Management",
+        assignment: "Study the sections on frame of reference, points of parity, and points of difference.",
+        studyFor: "Know when a brand must first establish category credibility before emphasizing difference.",
+      }
+    ],
+    mastery: [
+      "Name the real alternatives a customer would use if Lex & Hue did not exist.",
+      "Write a positioning hypothesis grounded in attributes, value, customer fit, and category.",
+      "Distinguish points of parity from points of difference.",
+      "Explain who the brand is deliberately not for."
+    ],
     case: 'Position Lex & Hue relative to realistic alternatives—not just other brand studios.',
     output: 'L&H positioning document',
     learn: ['Map competitive alternatives → unique attributes → value → best-fit customers → category → trends.', 'Distinguish category credibility from differentiation.', 'Study why specialization must create genuine expertise.'],
@@ -176,6 +258,29 @@ const rawWeeks: RawWeek[] = [
     question: 'What structural forces, conventions and trade-offs shape where a business can win?',
     frameworks: ['Porter Five Forces', 'Strategic groups', 'Value chain', 'Category conventions', 'Blue Ocean Strategy', '7 Powers'],
     readings: ['Michael Porter — Competitive Strategy', 'Hamilton Helmer — 7 Powers', 'Kim & Mauborgne — Blue Ocean Strategy'],
+    requiredReadings: [
+      {
+        source: "Michael Porter \u2014 The Five Competitive Forces That Shape Strategy",
+        assignment: "Read the full Harvard Business Review article.",
+        studyFor: "Industry rivalry, supplier power, buyer power, substitutes, and new entrants. Connect industry structure to strategic positioning.",
+      },
+      {
+        source: "Hamilton Helmer \u2014 7 Powers",
+        assignment: "Read the Introduction plus the overview chapter defining the seven durable sources of power.",
+        studyFor: "Distinguish temporary advantage from structural power and identify which forms are plausible for a small service business.",
+      },
+      {
+        source: "W. Chan Kim & Ren\u00e9e Mauborgne \u2014 Blue Ocean Strategy",
+        assignment: "Read the chapters introducing value innovation, the strategy canvas, and eliminate-reduce-raise-create.",
+        studyFor: "Use category conventions as raw material for strategic choice without assuming every business should create a 'blue ocean'.",
+      }
+    ],
+    mastery: [
+      "Map the five forces shaping a market.",
+      "Identify category conventions that create sameness or opportunity.",
+      "Distinguish differentiation from durable strategic power.",
+      "Defend which competitive trade-offs Lex & Hue should make."
+    ],
     case: 'Map the Milwaukee competitive landscape relevant to L&H.',
     output: 'Milwaukee competitive landscape',
     learn: ['Evaluate rivalry, substitutes, buyers, suppliers and entrants.', 'Identify category conventions worth following vs breaking.', 'Connect competitive choices to operational trade-offs.'],
@@ -187,6 +292,29 @@ const rawWeeks: RawWeek[] = [
     question: 'What has a brand already earned in memory, meaning and behavior—and what must not be destroyed?',
     frameworks: ['Keller CBBE', 'Brand Resonance', 'Aaker Brand Equity', 'Keller Brand Report Card'],
     readings: ['Kevin Lane Keller — Strategic Brand Management', 'David Aaker — Managing Brand Equity', 'Keller — The Brand Report Card'],
+    requiredReadings: [
+      {
+        source: "Kevin Lane Keller \u2014 Strategic Brand Management",
+        assignment: "Read the sections introducing Customer-Based Brand Equity and the Brand Resonance model.",
+        studyFor: "Salience \u2192 performance/imagery \u2192 judgments/feelings \u2192 resonance. Understand brand equity as memory and response, not merely aesthetics.",
+      },
+      {
+        source: "David Aaker \u2014 Managing Brand Equity",
+        assignment: "Read the chapters defining brand awareness, associations, perceived quality, loyalty, and proprietary brand assets.",
+        studyFor: "Identify what an established business has already earned and what a rebrand could accidentally destroy.",
+      },
+      {
+        source: "Kevin Lane Keller \u2014 The Brand Report Card",
+        assignment: "Read the full article.",
+        studyFor: "Use Keller's diagnostic criteria to evaluate whether a brand is coherent, relevant, properly positioned, and actively managed.",
+      }
+    ],
+    mastery: [
+      "Audit awareness, associations, quality, loyalty, and distinctive assets.",
+      "Separate valuable inherited equity from baggage.",
+      "Explain how a rebrand can destroy memory structures.",
+      "Create a KEEP / CHANGE / CREATE inventory grounded in evidence."
+    ],
     case: 'Tropicana 2009 — what happens when recognizable equity is discarded.',
     output: 'Brand Equity Audit',
     learn: ['Study awareness, associations, perceived quality, loyalty and brand assets.', 'Learn identity → meaning → response → relationship.', 'Turn the Brand Report Card into a diagnostic lens.'],
@@ -198,6 +326,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How does strategy become a coherent identity system rather than a collection of aesthetics?',
     frameworks: ['Kapferer Brand Identity Prism', 'Aaker Brand Identity System', 'Identity systems', 'Brand codes'],
     readings: ['Jean-Noël Kapferer — Brand Identity Prism', 'Marty Neumeier — The Brand Gap', 'Marty Neumeier — Zag'],
+    requiredReadings: [
+      {
+        source: "Jean-No\u00ebl Kapferer \u2014 The New Strategic Brand Management",
+        assignment: "Read the section explaining the Brand Identity Prism.",
+        studyFor: "Physique, personality, culture, relationship, reflection, and self-image. Separate identity from image and aesthetic preference.",
+      },
+      {
+        source: "Marty Neumeier \u2014 The Brand Gap",
+        assignment: "Read the core chapters on differentiation, collaboration, innovation, validation, and cultivation.",
+        studyFor: "Understand the bridge between business strategy and creative expression.",
+      },
+      {
+        source: "Marty Neumeier \u2014 Zag",
+        assignment: "Read the chapters on radical differentiation and the 'onlyness' test.",
+        studyFor: "Use differentiation as a hypothesis to pressure-test, not as permission to invent arbitrary novelty.",
+      }
+    ],
+    mastery: [
+      "Build a Brand Identity Prism.",
+      "Translate positioning into verbal, visual, and experiential identity principles.",
+      "Separate strategic identity from aesthetic taste.",
+      "Explain how identity codes should behave consistently across touchpoints."
+    ],
     case: 'Airbnb — brand platform + identity system.',
     output: 'L&H Brand Platform',
     learn: ['Study physique, personality, culture, relationship, reflection and self-image.', 'Separate strategic identity choices from aesthetic preference.', 'Connect verbal, visual and experiential codes.'],
@@ -209,6 +360,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do brands create identity value by participating in culture rather than merely describing product benefits?',
     frameworks: ['Douglas Holt cultural branding', 'Cultural tensions', 'Myths', 'Semiotics', 'Status + taste signaling', 'Archetypes as interpretive tools'],
     readings: ['Douglas Holt — How Brands Become Icons', 'Margaret Mark & Carol Pearson — The Hero and the Outlaw', 'Introductory semiotics + visual culture study'],
+    requiredReadings: [
+      {
+        source: "Douglas Holt \u2014 How Brands Become Icons",
+        assignment: "Read the Introduction and chapters introducing cultural branding, identity myths, and cultural contradictions.",
+        studyFor: "Understand how brands can create identity value by resolving or dramatizing cultural tensions.",
+      },
+      {
+        source: "Margaret Mark & Carol Pearson \u2014 The Hero and the Outlaw",
+        assignment: "Read the Introduction and the sections explaining archetypes as meaning systems.",
+        studyFor: "Use archetypes as interpretive tools for cultural meaning, not personality quizzes or decorative labels.",
+      },
+      {
+        source: "Introductory semiotics study",
+        assignment: "Study signifier/signified, denotation/connotation, codes, myths, and how visual symbols acquire cultural meaning.",
+        studyFor: "Learn to read typography, imagery, color, materials, language, and behavior as systems of signs.",
+      }
+    ],
+    mastery: [
+      "Identify a meaningful cultural tension rather than a generic trend.",
+      "Use semiotics to interpret visual and verbal codes.",
+      "Explain how a brand can create identity value through cultural meaning.",
+      "Use archetypes cautiously as interpretive tools."
+    ],
     case: 'Dove Real Beauty or Nike Just Do It — analyze cultural meaning and tension.',
     output: 'Cultural opportunity analysis',
     learn: ['Study cultural tensions, myths and symbolic meaning.', 'Learn to use archetypes without turning them into personality quizzes.', 'Identify codes, subcultures, status signals and taste signals.'],
@@ -220,6 +394,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do brands become easy to recognize, retrieve from memory and buy?',
     frameworks: ['Ehrenberg-Bass', 'Mental availability', 'Physical availability', 'Category Entry Points', 'Distinctive Asset Grid'],
     readings: ['Byron Sharp — How Brands Grow', 'Jenni Romaniuk — Building Distinctive Brand Assets'],
+    requiredReadings: [
+      {
+        source: "Byron Sharp \u2014 How Brands Grow",
+        assignment: "Read the chapters introducing penetration-led growth, double jeopardy, mental availability, and physical availability.",
+        studyFor: "Understand the evidence behind broad-reach growth claims and the limits of loyalty-first thinking.",
+      },
+      {
+        source: "Jenni Romaniuk \u2014 Building Distinctive Brand Assets",
+        assignment: "Read the opening chapters and the sections on fame, uniqueness, and measuring distinctive assets.",
+        studyFor: "Evaluate whether an asset is both widely recognized and uniquely linked to the brand.",
+      },
+      {
+        source: "Jenni Romaniuk \u2014 Better Brand Health",
+        assignment: "Study the sections on Category Entry Points and mental availability.",
+        studyFor: "Connect distinctive assets to the buying situations in which a brand needs to come to mind.",
+      }
+    ],
+    mastery: [
+      "Explain penetration, mental availability, and physical availability.",
+      "Audit an asset for fame and uniqueness.",
+      "Map Category Entry Points relevant to a brand.",
+      "Distinguish meaningful differentiation from distinctive memory-building assets."
+    ],
     case: 'Mailchimp or Oatly — identity systems that behave as memory structures.',
     output: 'Distinctive Asset Audit',
     learn: ['Understand penetration vs loyalty claims.', 'Study mental availability, physical availability and category entry points.', 'Evaluate fame and uniqueness of visual/verbal assets.'],
@@ -231,6 +428,29 @@ const rawWeeks: RawWeek[] = [
     question: 'What predictable biases shape how customers notice, interpret and choose?',
     frameworks: ['Prospect theory', 'Loss aversion', 'Anchoring', 'Availability heuristic', 'Framing'],
     readings: ['Daniel Kahneman + Amos Tversky — core behavioral economics concepts', 'Rory Sutherland — Alchemy'],
+    requiredReadings: [
+      {
+        source: "Daniel Kahneman \u2014 Thinking, Fast and Slow",
+        assignment: "Read the sections on System 1/System 2, heuristics, anchoring, availability, and framing.",
+        studyFor: "Recognize when decisions are shaped by fast judgment, reference points, salience, and presentation rather than deliberative analysis.",
+      },
+      {
+        source: "Daniel Kahneman & Amos Tversky \u2014 Prospect Theory",
+        assignment: "Study the core argument and graphs explaining reference dependence, loss aversion, and diminishing sensitivity.",
+        studyFor: "Understand why equivalent gains and losses do not feel equivalent and how framing changes perceived value.",
+      },
+      {
+        source: "Rory Sutherland \u2014 Alchemy",
+        assignment: "Read the opening chapters arguing for psychological and seemingly irrational sources of value.",
+        studyFor: "Learn to search for behavioral explanations when a purely rational business explanation is incomplete.",
+      }
+    ],
+    mastery: [
+      "Identify anchoring, framing, availability, and loss aversion in a buying journey.",
+      "Separate rational explanation from likely decision behavior.",
+      "Use behavioral evidence without overclaiming causality.",
+      "Redesign one point of friction using behavioral principles."
+    ],
     case: 'Choose a real service-business buying journey and identify invisible decision friction.',
     output: 'Behavioral teardown — part 1',
     learn: ['Study prospect theory, framing and anchoring.', 'Separate rational explanation from actual decision behavior.'],
@@ -242,6 +462,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How can a brand reduce perceived risk and make the right action easier without manipulation?',
     frameworks: ['Cialdini: reciprocity, commitment, social proof, authority, scarcity, liking, unity', 'Signaling', 'Choice architecture'],
     readings: ['Robert Cialdini — Influence', 'Rory Sutherland — Alchemy'],
+    requiredReadings: [
+      {
+        source: "Robert Cialdini \u2014 Influence",
+        assignment: "Read the chapters covering reciprocity, commitment/consistency, social proof, authority, scarcity, liking, and unity.",
+        studyFor: "Distinguish ethical evidence and decision support from manipulative pressure.",
+      },
+      {
+        source: "Rory Sutherland \u2014 Alchemy",
+        assignment: "Read the chapters on signaling, context, and psychological value.",
+        studyFor: "Understand why the meaning surrounding an offer can change perceived value without changing the underlying service.",
+      },
+      {
+        source: "Choice architecture primer",
+        assignment: "Study defaults, friction, salience, option structure, and cognitive load.",
+        studyFor: "Design environments that make the right action easier without removing meaningful choice.",
+      }
+    ],
+    mastery: [
+      "Distinguish social proof, authority, signaling, and scarcity.",
+      "Design ethical evidence that reduces perceived risk.",
+      "Use choice architecture to reduce cognitive load.",
+      "Explain when persuasion becomes manipulation."
+    ],
     case: 'Evaluate a premium service purchase for proof, authority, signaling and risk reduction.',
     output: 'Behavioral teardown — part 2',
     learn: ['Study ethical influence and evidence design.', 'Learn how signaling and social proof differ from empty persuasion tricks.'],
@@ -253,6 +496,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do pricing architecture, comparisons and perceived risk change willingness to buy?',
     frameworks: ['Anchoring', 'Reference prices', 'Loss aversion', 'Three-option architecture', 'Value framing'],
     readings: ['Revisit Kahneman/Tversky, Cialdini and Sutherland through pricing and offers'],
+    requiredReadings: [
+      {
+        source: "Daniel Kahneman \u2014 Thinking, Fast and Slow",
+        assignment: "Revisit the sections on anchoring, reference points, loss aversion, and framing.",
+        studyFor: "Apply behavioral economics specifically to pricing, packages, discounts, and perceived risk.",
+      },
+      {
+        source: "Blair Enns \u2014 Pricing Creativity",
+        assignment: "Read the sections introducing value-based pricing, options, and pricing the client rather than the hours.",
+        studyFor: "Separate price from labor inputs and use option architecture to clarify value and choice.",
+      },
+      {
+        source: "Rory Sutherland \u2014 Alchemy",
+        assignment: "Revisit examples where context and framing alter willingness to pay.",
+        studyFor: "Identify non-product variables that can change the perceived value of the Brand Evolution Audit.",
+      }
+    ],
+    mastery: [
+      "Explain how reference prices and anchors affect willingness to pay.",
+      "Build a three-option pricing architecture.",
+      "Distinguish discounting from value framing.",
+      "Identify how risk, context, and comparison alter perceived price."
+    ],
     case: 'Compare three service businesses with different offer and pricing architecture.',
     output: 'Redesigned L&H decision environment',
     learn: ['Study how price is interpreted in context.', 'Identify where discounts weaken vs strengthen positioning.'],
@@ -264,6 +530,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How does growth actually happen across penetration, loyalty, availability and buyer memory?',
     frameworks: ['Penetration vs loyalty', 'Double jeopardy', 'Mental availability', 'Physical availability'],
     readings: ['Byron Sharp — How Brands Grow', 'Ehrenberg-Bass evidence-based marketing resources'],
+    requiredReadings: [
+      {
+        source: "Byron Sharp \u2014 How Brands Grow",
+        assignment: "Read or revisit the chapters on penetration, double jeopardy, mental availability, and physical availability.",
+        studyFor: "Explain why growth usually requires reaching more category buyers rather than merely deepening loyalty.",
+      },
+      {
+        source: "Ehrenberg-Bass Institute \u2014 evidence summaries on buyer behavior",
+        assignment: "Study current institute summaries on duplication of purchase, double jeopardy, and mental/physical availability.",
+        studyFor: "Learn the empirical claims well enough to distinguish evidence from marketing folklore.",
+      },
+      {
+        source: "Philip Kotler \u2014 Marketing Management",
+        assignment: "Review the sections on market demand, segmentation, targeting, positioning, and the marketing mix.",
+        studyFor: "Contrast classical marketing architecture with the Ehrenberg-Bass school.",
+      }
+    ],
+    mastery: [
+      "Explain double jeopardy and penetration-led growth.",
+      "Distinguish mental from physical availability.",
+      "Critique where large-category evidence may or may not transfer to a small service firm.",
+      "Choose growth actions consistent with the evidence."
+    ],
     case: 'Choose one category and map how brands make themselves easier to remember and buy.',
     output: 'Growth-model memo',
     learn: ['Understand the core Ehrenberg-Bass growth claims.', 'Identify what differs for small/local service firms.'],
@@ -275,6 +564,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How should a business balance immediate sales activity with long-term memory and demand creation?',
     frameworks: ['Binet & Field', 'Brand building', 'Sales activation', 'Reach', 'Frequency', 'Share of voice', 'Excess share of voice'],
     readings: ['Les Binet & Peter Field — The Long and the Short of It'],
+    requiredReadings: [
+      {
+        source: "Les Binet & Peter Field \u2014 The Long and the Short of It",
+        assignment: "Read the core chapters comparing long-term brand building with short-term sales activation.",
+        studyFor: "Understand different time horizons, emotional vs. rational effects, reach, and why the famous 60:40 finding is contextual rather than universal.",
+      },
+      {
+        source: "Les Binet & Peter Field \u2014 effectiveness follow-up research",
+        assignment: "Study summaries on reach, fame, share of voice, and the relationship between brand effects and activation.",
+        studyFor: "Connect communication objectives to the metrics and time horizons that can actually reveal success.",
+      },
+      {
+        source: "Byron Sharp \u2014 How Brands Grow",
+        assignment: "Revisit broad reach and mental availability.",
+        studyFor: "Compare Binet/Field's effectiveness framework with Ehrenberg-Bass growth principles.",
+      }
+    ],
+    mastery: [
+      "Explain the different jobs of brand building and sales activation.",
+      "Choose metrics appropriate to long- vs. short-term effects.",
+      "Explain why 60:40 is not a universal prescription.",
+      "Defend an L&H business-development mix using evidence."
+    ],
     case: 'Snickers — You’re Not You When You’re Hungry.',
     output: 'Brand/activation allocation recommendation',
     learn: ['Study long-term vs short-term effects.', 'Understand why 60:40 is a contextual finding, not a universal commandment.'],
@@ -286,6 +598,29 @@ const rawWeeks: RawWeek[] = [
     question: 'When should a buyer think of this brand, and how do we systematically build those memory links?',
     frameworks: ['Category Entry Points', 'Customer acquisition', 'Funnels as imperfect models', 'Demand generation'],
     readings: ['Jenni Romaniuk / Ehrenberg-Bass material on Category Entry Points', 'Kotler for traditional marketing architecture'],
+    requiredReadings: [
+      {
+        source: "Jenni Romaniuk \u2014 Better Brand Health",
+        assignment: "Read the sections on Category Entry Points and measuring mental availability.",
+        studyFor: "Map the situations, needs, contexts, and triggers that should cue a brand in memory.",
+      },
+      {
+        source: "Ehrenberg-Bass Institute \u2014 Category Entry Point resources",
+        assignment: "Study practical CEP examples and how brands build memory links across buying situations.",
+        studyFor: "Turn abstract awareness goals into concrete buying-context memory objectives.",
+      },
+      {
+        source: "Philip Kotler \u2014 Marketing Management",
+        assignment: "Review buyer journey, demand generation, and channel concepts.",
+        studyFor: "Use funnel models as planning aids while recognizing that real buyer journeys are nonlinear.",
+      }
+    ],
+    mastery: [
+      "Create useful Category Entry Points.",
+      "Connect trigger events to memory structures and outreach.",
+      "Explain the limits of linear funnel models.",
+      "Turn demand situations into practical prospecting filters."
+    ],
     case: 'Old Spice — category repositioning and demand creation.',
     output: 'CEP + demand map',
     learn: ['Map buying situations rather than demographics alone.', 'Compare funnel thinking with broader demand models.'],
@@ -297,6 +632,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you turn diagnosis into an integrated 12-month marketing strategy with priorities and measurement?',
     frameworks: ['Reach', 'Frequency', 'Fame', 'Share of voice', 'Brand + activation', 'Acquisition', 'Measurement'],
     readings: ['Review Sharp, Romaniuk, Binet & Field, Kotler'],
+    requiredReadings: [
+      {
+        source: "Les Binet & Peter Field \u2014 The Long and the Short of It",
+        assignment: "Revisit the sections most relevant to objective-setting, brand/activation balance, reach, and measurement.",
+        studyFor: "Use effectiveness evidence to defend a 12-month allocation rather than defaulting to channel trends.",
+      },
+      {
+        source: "Byron Sharp + Jenni Romaniuk",
+        assignment: "Revisit mental availability, physical availability, distinctive assets, and Category Entry Points.",
+        studyFor: "Integrate growth science into a coherent plan instead of treating each framework as an isolated idea.",
+      },
+      {
+        source: "Philip Kotler \u2014 Marketing Management",
+        assignment: "Review planning, segmentation/targeting/positioning, channel strategy, budgeting, and control.",
+        studyFor: "Translate diagnosis into a structured marketing plan with priorities, owners, measures, and trade-offs.",
+      }
+    ],
+    mastery: [
+      "Build a coherent 12-month marketing strategy.",
+      "Defend channel and budget choices using objectives and evidence.",
+      "Integrate Sharp/Romaniuk, Binet/Field, and classical planning without contradiction.",
+      "Choose a small set of meaningful measures."
+    ],
     case: 'Liquid Death — category conventions, distinctiveness and distribution logic.',
     output: '12-month marketing strategy for a hypothetical L&H client',
     learn: ['Integrate the competing marketing schools.', 'Choose metrics appropriate to objectives instead of measuring everything.'],
@@ -308,6 +666,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Where does the customer encounter the brand, and where do expectations break?',
     frameworks: ['Customer journey mapping', 'Touchpoint mapping', 'Service design', 'Double Diamond'],
     readings: ['Design Council — Double Diamond', 'Service-design + customer-journey foundations'],
+    requiredReadings: [
+      {
+        source: "Design Council \u2014 Double Diamond",
+        assignment: "Study the Discover, Define, Develop, and Deliver model and the distinction between divergent and convergent work.",
+        studyFor: "Use the model as a process scaffold rather than a rigid sequence.",
+      },
+      {
+        source: "Service design foundations",
+        assignment: "Study customer journey maps, service blueprints, frontstage/backstage activity, evidence, and failure points.",
+        studyFor: "See the customer experience as a system supported by operational processes.",
+      },
+      {
+        source: "Marc Stickdorn et al. \u2014 This Is Service Design Doing",
+        assignment: "Read the introductory sections on journey mapping, service blueprints, and research-led service design.",
+        studyFor: "Connect qualitative research to concrete experience redesign.",
+      }
+    ],
+    mastery: [
+      "Map a complete customer journey.",
+      "Distinguish frontstage, backstage, and supporting systems.",
+      "Identify experience failure points that identity design cannot solve.",
+      "Turn research into prioritized service improvements."
+    ],
     case: 'Map a real customer journey from awareness through post-purchase.',
     output: 'Customer journey + failure points',
     learn: ['Distinguish frontstage, backstage and supporting systems.', 'Map expectation, moment, emotion, friction and evidence.'],
@@ -319,6 +700,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do environment, sensory cues and atmosphere shape perceived brand meaning?',
     frameworks: ['Bitner Servicescapes', 'Pine & Gilmore Experience Economy', 'Sensory branding', 'Environmental branding'],
     readings: ['Pine & Gilmore — The Experience Economy', 'Bitner — Servicescapes'],
+    requiredReadings: [
+      {
+        source: "B. Joseph Pine II & James H. Gilmore \u2014 The Experience Economy",
+        assignment: "Read the opening chapters introducing experiences as a distinct form of economic value and the principles of staging experiences.",
+        studyFor: "Understand how memorable experiences differ from simply delivering competent service.",
+      },
+      {
+        source: "Mary Jo Bitner \u2014 Servicescapes",
+        assignment: "Read the full article on the impact of physical surroundings on customers and employees.",
+        studyFor: "Ambient conditions, spatial layout/functionality, signs/symbols/artifacts, and social responses.",
+      },
+      {
+        source: "Sensory branding foundations",
+        assignment: "Study how sight, sound, smell, touch, and taste can reinforce memory, expectation, and positioning.",
+        studyFor: "Use sensory cues strategically rather than decoratively.",
+      }
+    ],
+    mastery: [
+      "Analyze a servicescape across ambient conditions, layout, symbols, and social cues.",
+      "Connect sensory cues to memory and positioning.",
+      "Distinguish atmosphere strategy from decoration.",
+      "Create an experience concept grounded in intended meaning."
+    ],
     case: 'Choose a hospitality, retail or wellness brand and analyze the physical/digital atmosphere.',
     output: 'Atmosphere strategy',
     learn: ['Study ambient conditions, spatial layout, signs/symbols and social environment.', 'Connect experience design to memory and positioning.'],
@@ -330,6 +734,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you redesign how a company presents, communicates and feels across all important encounters?',
     frameworks: ['UX strategy', 'Digital touchpoints', 'Service design', 'Sensory + retail/environmental branding'],
     readings: ['Review experience-economy, servicescape, UX and journey frameworks'],
+    requiredReadings: [
+      {
+        source: "Jesse James Garrett \u2014 The Elements of User Experience",
+        assignment: "Read the chapters explaining strategy, scope, structure, skeleton, and surface.",
+        studyFor: "Connect business goals and user needs to interface and content decisions.",
+      },
+      {
+        source: "Service-design + UX strategy review",
+        assignment: "Revisit customer journey mapping, service blueprints, Double Diamond, and servicescapes.",
+        studyFor: "Integrate digital, physical, service, and communication touchpoints into one experience system.",
+      },
+      {
+        source: "Pine & Gilmore \u2014 The Experience Economy",
+        assignment: "Revisit the sections on staging, cues, and memorability.",
+        studyFor: "Evaluate whether each touchpoint reinforces or contradicts the intended brand experience.",
+      }
+    ],
+    mastery: [
+      "Integrate digital, physical, service, and communication touchpoints.",
+      "Trace UX choices back to business goals and user needs.",
+      "Prioritize experience changes by strategic impact and feasibility.",
+      "Design a coherent total brand experience rather than isolated deliverables."
+    ],
     case: 'Redesign one company’s entire brand experience—not its logo.',
     output: 'Full brand-experience redesign',
     learn: ['Integrate physical, digital, service and communication touchpoints.'],
@@ -341,6 +768,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do you sell diagnosis and expertise without behaving like an order-taking vendor?',
     frameworks: ['Blair Enns expert positioning', 'Diagnosis before prescription', 'Qualification', 'Money conversation'],
     readings: ['Blair Enns — The Win Without Pitching Manifesto', 'David C. Baker — expertise + positioning'],
+    requiredReadings: [
+      {
+        source: "Blair Enns \u2014 The Win Without Pitching Manifesto",
+        assignment: "Read the full manifesto.",
+        studyFor: "Specialization, expert positioning, diagnosis before prescription, selectivity, money conversations, and refusing to solve problems before being paid.",
+      },
+      {
+        source: "David C. Baker \u2014 The Business of Expertise",
+        assignment: "Read the chapters on positioning, expertise, and narrowing the market.",
+        studyFor: "Understand why expertise requires repeated exposure to similar problems rather than merely claiming premium positioning.",
+      },
+      {
+        source: "Blair Enns \u2014 The Four Conversations",
+        assignment: "Read the opening framework and the sections on the value and qualification conversations.",
+        studyFor: "Separate selling expertise from order-taking and learn when to disqualify an opportunity.",
+      }
+    ],
+    mastery: [
+      "Qualify opportunities before prescribing solutions.",
+      "Explain expertise without behaving like an order-taking vendor.",
+      "Address money and fit early.",
+      "Know what strategic work you will not do for free."
+    ],
     case: 'Role-play: “I’m just looking for a logo.”',
     output: 'L&H qualification + discovery system',
     learn: ['Study specialization, selectivity and not solving unpaid problems.', 'Learn to address money early without apology.'],
@@ -352,6 +802,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you uncover business stakes deeply enough to connect strategic work to value?',
     frameworks: ['SPIN Selling', 'Four Conversations', 'Value-based pricing', 'Need-payoff'],
     readings: ['Neil Rackham — SPIN Selling', 'Blair Enns — The Four Conversations', 'Blair Enns — Pricing Creativity'],
+    requiredReadings: [
+      {
+        source: "Neil Rackham \u2014 SPIN Selling",
+        assignment: "Read the chapters introducing Situation, Problem, Implication, and Need-payoff questions.",
+        studyFor: "Move discovery from fact collection toward consequences, stakes, and the value of change.",
+      },
+      {
+        source: "Blair Enns \u2014 The Four Conversations",
+        assignment: "Read the sections on value and closing conversations.",
+        studyFor: "Learn to connect business outcomes and risk to scope and price before presenting a proposal.",
+      },
+      {
+        source: "Blair Enns \u2014 Pricing Creativity",
+        assignment: "Read the value-pricing and option-architecture sections.",
+        studyFor: "Translate discovered value into pricing logic without reverting to hourly cost-plus thinking.",
+      }
+    ],
+    mastery: [
+      "Run a SPIN-style discovery conversation.",
+      "Move from symptoms to business implications and value.",
+      "Summarize stakes before proposing scope.",
+      "Connect value to pricing logic."
+    ],
     case: 'Role-play: “My nephew can make a website for $500.”',
     output: 'Discovery-call script + value model',
     learn: ['Study Situation → Problem → Implication → Need-payoff.', 'Connect consequences and opportunity to pricing logic.'],
@@ -363,6 +836,29 @@ const rawWeeks: RawWeek[] = [
     question: 'How do you structure choices, protect scope and negotiate without collapsing your positioning?',
     frameworks: ['Three-option proposals', 'Anchoring', 'Objection handling', 'Negotiation', 'Scope control'],
     readings: ['Revisit Pricing Creativity + Four Conversations', 'Study proposal architecture and scope management'],
+    requiredReadings: [
+      {
+        source: "Blair Enns \u2014 Pricing Creativity",
+        assignment: "Read the sections on options, anchoring, concessions, and protecting price.",
+        studyFor: "Use proposal architecture to create meaningful choices instead of one take-it-or-leave-it scope.",
+      },
+      {
+        source: "Blair Enns \u2014 The Four Conversations",
+        assignment: "Read the sections on closing and handling resistance.",
+        studyFor: "Treat objections as information about value, risk, authority, or timing rather than as invitations to immediately discount.",
+      },
+      {
+        source: "Negotiation foundations",
+        assignment: "Study BATNA, interests vs. positions, reciprocal concessions, and scope-change controls.",
+        studyFor: "Protect commercial boundaries while preserving a collaborative client relationship.",
+      }
+    ],
+    mastery: [
+      "Build three meaningful proposal options.",
+      "Handle objections without reflexively discounting.",
+      "Protect scope with explicit change rules.",
+      "Negotiate through value exchange rather than unilateral concession."
+    ],
     case: 'Role-play: “We don’t have a budget” and “Can you send concepts before we hire you?”',
     output: 'L&H proposal architecture',
     learn: ['Learn option design and scope boundaries.', 'Separate concession from value exchange.'],
@@ -374,6 +870,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you make sense of a messy business situation before jumping to solutions?',
     frameworks: ['Integrated diagnosis across strategy, research, position, brand, marketing and experience'],
     readings: ['No major new theory — review weak areas from your Strategy Notebook'],
+    requiredReadings: [
+      {
+        source: "Richard Rumelt \u2014 Good Strategy/Bad Strategy",
+        assignment: "Revisit Bad Strategy and The Kernel of Good Strategy.",
+        studyFor: "Diagnose the central challenge before selecting frameworks or proposing creative solutions.",
+      },
+      {
+        source: "April Dunford \u2014 Obviously Awesome",
+        assignment: "Revisit competitive alternatives, value, best-fit customers, and market category.",
+        studyFor: "Use positioning only where the evidence supports it; do not force every problem into a positioning problem.",
+      },
+      {
+        source: "Your Strategy Notebook \u2014 Weeks 1\u201321",
+        assignment: "Review your strongest critiques, failed assumptions, and repeated patterns.",
+        studyFor: "Identify which frameworks you actually trust, when they apply, and where they conflict.",
+      }
+    ],
+    mastery: [
+      "Diagnose a messy business situation without jumping to solutions.",
+      "State evidence, assumptions, and missing information separately.",
+      "Choose frameworks because they fit the problem, not because they are familiar.",
+      "Identify the crux of the capstone challenge."
+    ],
     case: 'Capstone fictional business: customer interviews, financials, competitors, brand, site, leadership and market data.',
     output: 'Capstone diagnosis',
     learn: ['Review your framework critiques.', 'Choose only the frameworks that fit the situation.'],
@@ -385,6 +904,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you make coherent choices and explain what the client should do—and not do?',
     frameworks: ['DIAGNOSE → DEFINE → DISTILL → DESIGN → DEPLOY → MEASURE'],
     readings: ['Review Rumelt, Porter, Dunford, Keller, Sharp/Romaniuk, Holt, Binet/Field, Enns'],
+    requiredReadings: [
+      {
+        source: "Michael Porter \u2014 What Is Strategy?",
+        assignment: "Revisit trade-offs, fit, and unique activity systems.",
+        studyFor: "Ensure the recommendation represents coherent choices rather than a collection of good ideas.",
+      },
+      {
+        source: "Roger Martin + A.G. Lafley \u2014 Playing to Win",
+        assignment: "Revisit the Strategy Choice Cascade.",
+        studyFor: "Check that where-to-play and how-to-win choices are supported by capabilities and management systems.",
+      },
+      {
+        source: "Keller + Sharp/Romaniuk + Holt + Binet/Field",
+        assignment: "Review only the sections relevant to the capstone diagnosis: equity, distinctiveness, culture, growth, and effectiveness.",
+        studyFor: "Integrate competing schools selectively. Explain why each chosen lens is useful and why excluded lenses are less relevant.",
+      }
+    ],
+    mastery: [
+      "Make coherent strategic choices across position, audience, promise, identity, experience, and growth.",
+      "Explain what the client should not do.",
+      "Show how recommendations reinforce one another.",
+      "Build measurement logic tied to strategic objectives."
+    ],
     case: 'Continue capstone.',
     output: 'Complete strategic recommendation',
     learn: ['Integrate competing schools without becoming dogmatic.'],
@@ -396,6 +938,29 @@ const rawWeeks: RawWeek[] = [
     question: 'Can you defend your strategic choices under pressure and turn the process into reusable L&H intellectual property?',
     frameworks: ['Strategic defense', 'Evidence + critique', 'Methodology codification', 'Measurement'],
     readings: ['No new theory — final synthesis'],
+    requiredReadings: [
+      {
+        source: "Your complete Strategy Notebook",
+        assignment: "Review Weeks 1\u201323 and identify the ideas you now accept, reject, or hold conditionally.",
+        studyFor: "Turn accumulated notes into an explicit strategic point of view rather than a library of quotations.",
+      },
+      {
+        source: "Capstone evidence pack",
+        assignment: "Re-read all customer, market, competitor, brand, experience, and commercial evidence used in the capstone.",
+        studyFor: "Make every recommendation traceable to evidence, a strategic choice, or a clearly labeled assumption.",
+      },
+      {
+        source: "Selected methodology review",
+        assignment: "Revisit Rumelt, Porter, Dunford, Keller, Sharp/Romaniuk, Holt, Binet/Field, and Enns only where needed to defend the final recommendation.",
+        studyFor: "Demonstrate framework fluency by using the minimum necessary theory\u2014not by name-dropping every model.",
+      }
+    ],
+    mastery: [
+      "Defend recommendations under skeptical questioning.",
+      "Trace claims to evidence and assumptions.",
+      "Revise strategy after challenge without abandoning sound choices.",
+      "Codify a clear Lex & Hue methodology and strategic point of view."
+    ],
     case: 'Present the capstone as if to a skeptical client or strategy director.',
     output: 'Polished L&H strategy case study + methodology v1',
     learn: ['Review the full Strategy Notebook.', 'Identify what you believe, what you reject and where you remain uncertain.'],
@@ -639,8 +1204,11 @@ ${week.question}
 FRAMEWORKS:
 ${week.frameworks.map(f => `- ${f}`).join('\n')}
 
-READINGS:
-${week.readings.map(r => `- ${r}`).join('\n')}
+REQUIRED READINGS:
+${week.requiredReadings.map(r => `- ${r.source}\n  Read: ${r.assignment}\n  Study for: ${r.studyFor}`).join('\n')}
+
+EXPECTED MASTERY:
+${week.mastery.map(item => `- ${item}`).join('\n')}
 
 MY RESPONSE:
 ${response || '[No response written yet]'}
@@ -844,10 +1412,10 @@ function TrackCard({ track, tasks, state, toggleTask, openTask }: TrackCardProps
     Practice: 'Real-company analysis, case work and strategic reps.',
     Earn: 'L&H offer, authority, prospecting, pipeline and sales.',
   }
-  const accent = track === 'Earn' ? 'bg-[#ec5a25] text-white' : track === 'Practice' ? 'bg-[#cfc5ad]' : 'bg-[#e4dccf]'
+  const accent = track === 'Earn' ? 'bg-[#ec5a25] text-white' : track === 'Practice' ? 'bg-[#c9bda8]' : 'bg-[#e4dccf]'
   return (
     <div className={`${accent} min-h-[360px] p-6 md:p-7`}>
-      <div className="flex items-start justify-between gap-4"><div><h2 className="serif text-4xl">{track}</h2><p className={`mt-2 text-sm leading-6 ${track === 'Earn' ?  'text-white/70' : 'text-black/55'}`}>{descriptions[track]}</p></div><div className="serif text-2xl">{tasks.filter(t => state.completed[t.id]).length}/{tasks.length}</div></div>
+      <div className="flex items-start justify-between gap-4"><div><h2 className="serif text-4xl">{track}</h2><p className={`mt-2 text-sm leading-6 ${track === 'Earn' ? 'text-white/70' : 'text-black/55'}`}>{descriptions[track]}</p></div><div className="serif text-2xl">{tasks.filter(t => state.completed[t.id]).length}/{tasks.length}</div></div>
       <div className={`mt-6 divide-y ${track === 'Earn' ? 'divide-white/25' : 'divide-black/15'}`}>{tasks.map(task => <TaskRow key={task.id} task={task} checked={!!state.completed[task.id]} onChange={() => toggleTask(task.id)} onOpen={() => openTask(task)} inverse={track === 'Earn'} />)}</div>
     </div>
   )
@@ -1040,51 +1608,14 @@ function WeeksView({ weeks, state, toggleTask, openTask, selectedWeek, setSelect
   )
 }
 
-function WeekDetail({
-  week,
-  state,
-  toggleTask,
-  openTask,
-  selected,
-  onSelect,
-  updateNotes,
-}: WeekDetailProps) {
+function WeekDetail({ week, state, toggleTask, openTask, selected, onSelect, updateNotes }: WeekDetailProps) {
   const done = week.tasks.filter(t => state.completed[t.id]).length
-
   return (
-    <article
-      id={`week-${week.number}`}
-      onClick={onSelect}
-      className={`scroll-mt-28 border-t p-0 pt-5 transition ${
-        selected ? 'border-[#ec5a25]' : 'border-black/30'
-      }`}
-    >
+    <article id={`week-${week.number}`} onClick={onSelect} className={`scroll-mt-28 border-t p-0 pt-5 transition ${selected ? 'border-[#ec5a25]' : 'border-black/30'}`}>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
-        <div>
-          <div className="text-sm text-black/45">
-            Week {week.number} · {formatDate(week.start)}–
-            {formatDate(week.end)} · {phaseMeta[week.phase].name}
-          </div>
-
-          <h2 className="serif mt-2 text-4xl md:text-5xl">
-            {week.title}
-          </h2>
-
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">
-            {week.question}
-          </p>
-        </div>
-
-        <div className="shrink-0 text-right">
-          <div className="serif text-3xl">
-            {done}/{week.tasks.length}
-          </div>
-          <div className="text-xs text-black/40">
-            actions complete
-          </div>
-        </div>
+        <div><div className="text-sm text-black/45">Week {week.number} · {formatDate(week.start)}–{formatDate(week.end)} · {phaseMeta[week.phase].name}</div><h2 className="serif mt-2 text-4xl md:text-5xl">{week.title}</h2><p className="mt-3 max-w-3xl text-sm leading-6 text-black/60">{week.question}</p></div>
+        <div className="shrink-0 text-right"><div className="serif text-3xl">{done}/{week.tasks.length}</div><div className="text-xs text-black/40">actions complete</div></div>
       </div>
-
       <div className="mt-7 grid gap-5 xl:grid-cols-3">
         {(['Learn', 'Practice', 'Earn'] as Track[]).map(track => (
           <div
@@ -1097,15 +1628,11 @@ function WeekDetail({
                   : 'border border-black/20'
             } p-5`}
           >
-            <h3 className="serif text-3xl">
-              {track}
-            </h3>
+            <h3 className="serif text-3xl">{track}</h3>
 
             <div
               className={`mt-3 divide-y ${
-                track === 'Earn'
-                  ? 'divide-white/25'
-                  : 'divide-black/10'
+                track === 'Earn' ? 'divide-white/25' : 'divide-black/10'
               }`}
             >
               {week.tasks
@@ -1130,72 +1657,38 @@ function WeekDetail({
           </div>
         ))}
       </div>
-
       <div className="mt-5 grid gap-5 md:grid-cols-2">
         <div className="bg-[#ded4c4] p-5">
-          <h3 className="font-semibold">
-            Read / study
-          </h3>
-
-          <ul className="mt-3 space-y-2 text-sm leading-5 text-black/65">
-            {week.readings.map(r => (
-              <li key={r}>— {r}</li>
-            ))}
-          </ul>
-
-          <h3 className="mt-6 font-semibold">
-            Strategic output
-          </h3>
-
-          <p className="mt-2 serif text-2xl">
-            {week.output}
-          </p>
-        </div>
-
-        <div className="border border-black/20 p-5">
-          <h3 className="font-semibold">
-            Case / simulation
-          </h3>
-
-          <p className="mt-2 text-sm leading-6 text-black/65">
-            {week.case}
-          </p>
-
-          <h3 className="mt-6 font-semibold">
-            Frameworks
-          </h3>
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            {week.frameworks.map(f => (
-              <span
-                key={f}
-                className="rounded-full bg-black/5 px-3 py-1.5 text-xs"
-              >
-                {f}
-              </span>
+          <h3 className="font-semibold">Required reading</h3>
+          <div className="mt-4 space-y-5">
+            {week.requiredReadings.map(reading => (
+              <div key={reading.source} className="border-t border-black/15 pt-4 first:border-t-0 first:pt-0">
+                <div className="font-semibold leading-5">{reading.source}</div>
+                <div className="mt-2 text-sm leading-6 text-black/70">
+                  <strong>Read:</strong> {reading.assignment}
+                </div>
+                <div className="mt-2 text-sm leading-6 text-black/60">
+                  <strong>Study for:</strong> {reading.studyFor}
+                </div>
+              </div>
             ))}
           </div>
+
+          <h3 className="mt-7 font-semibold">By the end of this week, you should be able to…</h3>
+          <ul className="mt-3 space-y-2 text-sm leading-6 text-black/65">
+            {week.mastery.map(item => <li key={item}>— {item}</li>)}
+          </ul>
+
+          <h3 className="mt-7 font-semibold">Strategic output</h3>
+          <p className="mt-2 serif text-2xl">{week.output}</p>
         </div>
+        <div className="border border-black/20 p-5"><h3 className="font-semibold">Case / simulation</h3><p className="mt-2 text-sm leading-6 text-black/65">{week.case}</p><h3 className="mt-6 font-semibold">Frameworks</h3><div className="mt-3 flex flex-wrap gap-2">{week.frameworks.map(f => <span key={f} className="rounded-full bg-black/5 px-3 py-1.5 text-xs">{f}</span>)}</div></div>
       </div>
-
-      <details className="mt-5 border border-black/20 bg-white/20 p-5">
-        <summary className="cursor-pointer font-semibold">
-          Strategy notebook
-        </summary>
-
-        <textarea
-          value={state.notes[week.number] || ''}
-          onChange={e =>
-            updateNotes(week.number, e.target.value)
-          }
-          onClick={e => e.stopPropagation()}
-          placeholder="Theory / Evidence / Critique / Application"
-          className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none"
-        />
-      </details>
+      <details className="mt-5 border border-black/20 bg-white/20 p-5"><summary className="cursor-pointer font-semibold">Strategy notebook</summary><textarea value={state.notes[week.number] || ''} onChange={e => updateNotes(week.number, e.target.value)} onClick={e => e.stopPropagation()} placeholder="Theory / Evidence / Critique / Application" className="mt-4 min-h-48 w-full border border-black/20 bg-[#f8f3ea] p-4 outline-none" /></details>
     </article>
   )
 }
+
 type AssignmentWorkspaceProps = {
   task: Task
   week: Week
@@ -1289,11 +1782,17 @@ function AssignmentWorkspace({
             </div>
 
             <div>
-              <h3 className="font-semibold">Read / study</h3>
-              <div className="mt-3 space-y-2">
-                {week.readings.map((reading) => (
-                  <div key={reading} className="text-xs leading-5 text-black/60">
-                    — {reading}
+              <h3 className="font-semibold">Required reading</h3>
+              <div className="mt-3 space-y-4">
+                {week.requiredReadings.map((reading) => (
+                  <div key={reading.source} className="border-t border-black/10 pt-3 first:border-t-0 first:pt-0">
+                    <div className="text-xs font-semibold leading-5">{reading.source}</div>
+                    <div className="mt-1 text-xs leading-5 text-black/60">
+                      <strong>Read:</strong> {reading.assignment}
+                    </div>
+                    <div className="mt-1 text-xs leading-5 text-black/50">
+                      <strong>Study for:</strong> {reading.studyFor}
+                    </div>
                   </div>
                 ))}
               </div>
